@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz : Qualité des Données et Traitement dans BigQuery</title>
     <style>
+        /* (Styles identiques à l'original, conservés tels quels) */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
+            flex-direction: column;
         }
         h1 {
             color: #2c3e50;
             text-align: center;
+            margin-bottom: 20px;
         }
-        h3 {
+        h2 {
             color: #2c3e50;
             font-size: 22px;
         }
@@ -23,12 +31,22 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
             max-width: 800px;
-            margin: auto;
+        }
+        .bande {
+          background-color: #f0f0f0; /* Couleur de la bande, tu peux changer */
+          padding: 20px;            /* Espace intérieur (haut/bas/gauche/droite) */
+          text-align: center;       /* Centre le texte horizontalement */
+          border-radius: 8px;       /* Coins arrondis (optionnel) */
+          margin: 20px auto;        /* Centre la bande dans la page */
+          max-width: 800px;         /* Largeur max pour limiter la bande */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+          width: 100%;               /* Largeur du rectandle */
         }
         .question {
             font-size: 18px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .answers {
             margin-left: 20px;
@@ -36,168 +54,201 @@
         label {
             font-size: 16px;
         }
-        button {
-            margin-top: 20px;
+        .submit-btn {
             background-color: #3498db;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            width: 100%;
+            text-align: center;
         }
-        button:hover {
+        .submit-btn:hover {
             background-color: #2980b9;
         }
         .feedback {
-            margin-top: 10px;
-            padding: 10px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #eaf2f8;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .correct {
-            background-color: #d4edda;
             color: green;
         }
         .incorrect {
-            background-color: #f8d7da;
             color: red;
         }
-        .result {
-            margin-top: 30px;
-            font-size: 20px;
-            font-weight: bold;
+
+        section {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        button a {
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-  <div class="quiz-container">
-    <h1>Quiz : Qualité des Données et Traitement dans BigQuery</h1>
+<header class="bande">
+    <h2>Préparation Certificat : Cloud Data Engineer</h2>
+    <h2>Construire des Pipelines de Données en Batch sur Google Cloud</h2>
+</header>
 
-    <div class="question">
-      <h3>1. Quelle est la principale raison pour laquelle nous traitons la qualité des données ?</h3>
-      <ul>
-        <li> <input type="radio" name="q1" value="a"> a) Pour augmenter la taille des données</li>
-        <li> <input type="radio" name="q1" value="b"> b) Pour améliorer les performances du stockage</li>
-        <li> <input type="radio" name="q1" value="c"> c) Pour éviter que des données de mauvaise qualité nuisent à l'analyse et aux décisions commerciales</li>
-        <li> <input type="radio" name="q1" value="d"> d) Pour rendre les données plus faciles à stocker</li>
-      </ul>
-      <div class="feedback" id="feedback-q1"></div>
+<h2>Quiz : Qualité des Données et Traitement dans BigQuery</h2>
+
+<div class="quiz-container">
+    <form id="quizForm">
+        <div class="question">
+            <h2><p>1. Quelle est la principale raison pour laquelle nous traitons la qualité des données ?</p></h2>
+            <div class="answers">
+                <input type="radio" id="q1a" name="q1" value="a">
+                <label for="q1a">a) Pour augmenter la taille des données</label><br>
+                <input type="radio" id="q1b" name="q1" value="b">
+                <label for="q1b">b) Pour améliorer les performances du stockage</label><br>
+                <input type="radio" id="q1c" name="q1" value="c">
+                <label for="q1c">c) Pour éviter que des données de mauvaise qualité nuisent à l'analyse et aux décisions commerciales</label><br>
+                <input type="radio" id="q1d" name="q1" value="d">
+                <label for="q1d">d) Pour rendre les données plus faciles à stocker</label><br>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2><p>2. Quelle est une des caractéristiques de données qui peut être <strong>invalide</strong> ?</p></h2>
+            <div class="answers">
+                <input type="radio" id="q2a" name="q2" value="a">
+                <label for="q2a">a) Une transaction de 7$ au lieu de 10$ pour un ticket de cinéma</label><br>
+                <input type="radio" id="q2b" name="q2" value="b">
+                <label for="q2b">b) Une information qui n'est pas en format texte</label><br>
+                <input type="radio" id="q2c" name="q2" value="c">
+                <label for="q2c">c) Une donnée en double dans une table</label><br>
+                <input type="radio" id="q2d" name="q2" value="d">
+                <label for="q2d">d) Une donnée manquante</label><br>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2><p>3. Quelle est la différence entre <strong>validité</strong> et <strong>précision</strong> des données ?</p></h2>
+            <div class="answers">
+                <input type="radio" id="q3a" name="q3" value="a">
+                <label for="q3a">a) La validité concerne les erreurs humaines, la précision les erreurs techniques</label><br>
+                <input type="radio" id="q3b" name="q3" value="b">
+                <label for="q3b">b) La validité fait référence à l'alignement des données avec les règles commerciales, la précision à la correspondance avec la vérité objective</label><br>
+                <input type="radio" id="q3c" name="q3" value="c">
+                <label for="q3c">c) La validité se réfère à la quantité de données, la précision concerne la rapidité de l'accès</label><br>
+                <input type="radio" id="q3d" name="q3" value="d">
+                <label for="q3d">d) La validité et la précision sont synonymes dans ce contexte</label><br>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2><p>4. Comment BigQuery peut-il résoudre le problème des <strong>doublons</strong> dans les données ?</p></h2>
+            <div class="answers">
+                <input type="radio" id="q4a" name="q4" value="a">
+                <label for="q4a">a) En supprimant automatiquement les doublons lors de l'importation</label><br>
+                <input type="radio" id="q4b" name="q4" value="b">
+                <label for="q4b">b) En utilisant la fonction `COUNT DISTINCT`</label><br>
+                <input type="radio" id="q4c" name="q4" value="c">
+                <label for="q4c">c) En utilisant des vues pour stocker les doublons</label><br>
+                <input type="radio" id="q4d" name="q4" value="d">
+                <label for="q4d">d) En créant un script Python pour nettoyer les doublons</label><br>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2><p>5. Dans quel cas <strong>BigQuery View</strong> peut-il être utile ?</p></h2>
+            <div class="answers">
+                <input type="radio" id="q5a" name="q5" value="a">
+                <label for="q5a">a) Pour créer un ensemble de données de test</label><br>
+                <input type="radio" id="q5b" name="q5" value="b">
+                <label for="q5b">b) Pour permettre aux utilisateurs d'accéder à des données nettoyées et filtrées</label><br>
+                <input type="radio" id="q5c" name="q5" value="c">
+                <label for="q5c">c) Pour faire des calculs de données complexes</label><br>
+                <input type="radio" id="q5d" name="q5" value="d">
+                <label for="q5d">d) Pour créer une copie des données dans une autre table</label><br>
+            </div>
+        </div>
+
+        <div class="question">
+            <h2><p>6. Que signifie <strong>complétude</strong> des données ?</p></h2>
+            <div class="answers">
+                <input type="radio" id="q6a" name="q6" value="a">
+                <label for="q6a">a) Les données sont exactes et précises</label><br>
+                <input type="radio" id="q6b" name="q6" value="b">
+                <label for="q6b">b) Toutes les informations nécessaires sont présentes</label><br>
+                <input type="radio" id="q6c" name="q6" value="c">
+                <label for="q6c">c) Les données sont cohérentes dans toutes les sources</label><br>
+                <input type="radio" id="q6d" name="q6" value="d">
+                <label for="q6d">d) Les données sont dans un format uniforme</label><br>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Vérifier toutes les réponses</button>
+    </form>
+
+    <div id="feedback" class="feedback" style="display: none;">
+        <p id="score"></p>
+        <p><strong>Réponses Correctes:</strong></p>
+        <ul id="correctAnswers"></ul>
     </div>
+</div>
 
-    <div class="question">
-      <h3>2. Quelle est une des caractéristiques de données qui peut être **invalide** ?</h3>
-      <ul>
-        <li> <input type="radio" name="q2" value="a"> a) Une transaction de 7$ au lieu de 10$ pour un ticket de cinéma</li>
-        <li> <input type="radio" name="q2" value="b"> b) Une information qui n'est pas en format texte</li>
-        <li> <input type="radio" name="q2" value="c"> c) Une donnée en double dans une table</li>
-        <li> <input type="radio" name="q2" value="d"> d) Une donnée manquante</li>
-      </ul>
-      <div class="feedback" id="feedback-q2"></div>
-    </div>
+<section>
+    <button type="submit" class="submit-btn"><a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"><a href="/Cloud-Data-Engineer-Certificat/partie-3/cours/section-3-2.html">← retour à la partie du cours</a></button>
+    <button type="submit" class="submit-btn"><a href="/Cloud-Data-Engineer-Certificat/partie-3/cours/section-3-3.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"><a href="/Cloud-Data-Engineer-Certificat/partie-3/quiz/quiz-3-3.html">Quiz cours suivant→</a></button>
+</section>
 
-    <div class="question">
-      <h3>3. Quelle est la différence entre **validité** et **précision** des données ?</h3>
-      <ul>
-        <li> <input type="radio" name="q3" value="a"> a) La validité concerne les erreurs humaines, tandis que la précision concerne les erreurs techniques</li>
-        <li> <input type="radio" name="q3" value="b"> b) La validité fait référence à l'alignement des données avec les règles commerciales, tandis que la précision fait référence à la correspondance avec la vérité objective</li>
-        <li> <input type="radio" name="q3" value="c"> c) La validité se réfère à la quantité de données, tandis que la précision concerne la rapidité de l'accès</li>
-        <li> <input type="radio" name="q3" value="d"> d) La validité et la précision sont synonymes dans ce contexte</li>
-      </ul>
-      <div class="feedback" id="feedback-q3"></div>
-    </div>
+<script>
+    document.getElementById("quizForm").addEventListener("submit", function(event) {
+        event.preventDefault();
 
-    <div class="question">
-      <h3>4. Comment BigQuery peut-il résoudre le problème des **doublons** dans les données ?</h3>
-      <ul>
-        <li> <input type="radio" name="q4" value="a"> a) En supprimant automatiquement les doublons lors de l'importation</li>
-        <li> <input type="radio" name="q4" value="b"> b) En utilisant la fonction `COUNT DISTINCT` pour calculer les résultats uniques sans avoir à transformer les données</li>
-        <li> <input type="radio" name="q4" value="c"> c) En utilisant des vues pour stocker les doublons et les gérer plus facilement</li>
-        <li> <input type="radio" name="q4" value="d"> d) En créant un script Python pour nettoyer les doublons</li>
-      </ul>
-      <div class="feedback" id="feedback-q4"></div>
-    </div>
+        const correctAnswers = {
+            q1: "c",
+            q2: "c",
+            q3: "b",
+            q4: "b",
+            q5: "b",
+            q6: "b"
+        };
 
-    <div class="question">
-      <h3>5. Dans quel cas **BigQuery View** peut-il être utile ?</h3>
-      <ul>
-        <li> <input type="radio" name="q5" value="a"> a) Pour créer un ensemble de données de test</li>
-        <li> <input type="radio" name="q5" value="b"> b) Pour permettre aux utilisateurs d'accéder à des données nettoyées et filtrées sans affecter les données brutes</li>
-        <li> <input type="radio" name="q5" value="c"> c) Pour faire des calculs de données complexes</li>
-        <li> <input type="radio" name="q5" value="d"> d) Pour créer une copie des données d'origine dans une autre table</li>
-      </ul>
-      <div class="feedback" id="feedback-q5"></div>
-    </div>
+        let score = 0;
+        let feedbackHtml = "";
 
-    <div class="question">
-      <h3>6. Que signifie **complétude** des données ?</h3>
-      <ul>
-        <li> <input type="radio" name="q6" value="a"> a) Les données sont exactes et précises</li>
-        <li> <input type="radio" name="q6" value="b"> b) Toutes les informations nécessaires sont présentes dans les ensembles de données</li>
-        <li> <input type="radio" name="q6" value="c"> c) Les données sont cohérentes dans toutes les sources</li>
-        <li> <input type="radio" name="q6" value="d"> d) Les données sont disponibles dans un format uniforme</li>
-      </ul>
-      <div class="feedback" id="feedback-q6"></div>
-    </div>
-
-    <button onclick="checkAnswers()">Vérifier toutes les réponses</button>
-
-    <div class="result" id="result"></div>
-  </div>
-
-  <script>
-    function checkAnswers() {
-      let score = 0;
-      const totalQuestions = 6;
-      let feedbackMessages = [];
-
-      // Correct answers
-      const correctAnswers = {
-        q1: "c",
-        q2: "c",
-        q3: "b",
-        q4: "b",
-        q5: "b",
-        q6: "b"
-      };
-
-      // Checking answers for each question
-      for (let i = 1; i <= totalQuestions; i++) {
-        const question = document.querySelector(`input[name="q${i}"]:checked`);
-        const feedback = document.getElementById(`feedback-q${i}`);
-
-        if (question) {
-          const answer = question.value;
-          if (answer === correctAnswers[`q${i}`]) {
-            score++;
-            feedback.textContent = "Correct!";
-            feedback.className = "feedback correct";
-          } else {
-            feedback.textContent = `Incorrect (Bonne réponse : ${correctAnswers[`q${i}`]})`;
-            feedback.className = "feedback incorrect";
-          }
-        } else {
-          feedback.textContent = "Non répondue";
-          feedback.className = "feedback incorrect";
-          feedbackMessages.push(`Question ${i}: Non répondue`);
+        for (let i = 1; i <= 6; i++) {
+            const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selectedAnswer) {
+                const answer = selectedAnswer.value;
+                if (answer === correctAnswers[`q${i}`]) {
+                    score++;
+                    feedbackHtml += `<li>Question ${i}: <span class="correct">Correct</span></li>`;
+                } else {
+                    feedbackHtml += `<li>Question ${i}: <span class="incorrect">Incorrect (Bonne réponse : ${correctAnswers[`q${i}`]})</span></li>`;
+                }
+            } else {
+                feedbackHtml += `<li>Question ${i}: <span class="incorrect">Non répondue</span></li>`;
+            }
         }
-      }
 
-      // Show final score
-      const result = document.getElementById("result");
-      result.textContent = `Votre score est ${score} sur ${totalQuestions}.`;
+        document.getElementById("score").textContent = `Votre score est : ${score} sur 6.`;
+        document.getElementById("correctAnswers").innerHTML = feedbackHtml;
+        document.getElementById("feedback").style.display = "block";
+    });
+</script>
 
-      // Display feedback messages if any question is missing a response
-      if (feedbackMessages.length > 0) {
-        result.textContent += `\n\n${feedbackMessages.join("\n")}`;
-      }
-    }
-  </script>
-    
-    <section>
-      <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
-      <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/partie-3/cours/section-3-3.html">← retour à la partie du cours</a></button>
-      <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-3/cours/section-3-4.html">Partie suivante →</a></button>
-      <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-3/quiz/quiz-3-4.html">Quiz cours suivant→ </a></button>
-    </section>
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
 </body>
 </html>

@@ -41,6 +41,18 @@
             max-width: 800px; /* Limite la largeur à 800px pour un rendu agréable */
         }
 
+        /* Style de la bande d'entête */
+        .bande {
+          background-color: #f0f0f0; /* Couleur de la bande, tu peux changer */
+          padding: 20px;            /* Espace intérieur (haut/bas/gauche/droite) */
+          text-align: center;       /* Centre le texte horizontalement */
+          border-radius: 8px;       /* Coins arrondis (optionnel) */
+          margin: 20px auto;        /* Centre la bande dans la page */
+          max-width: 800px;         /* Largeur max pour limiter la bande */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+          width: 100%;               /* Largeur du rectandle */
+        }
+
         /* Style des questions */
         .question {
             font-size: 18px; /* Taille de la police pour les questions */
@@ -114,8 +126,12 @@
     </style>
 </head>
 <body>
+    <header class="bande">
+        <h2>Préparation Certificat : Cloud Data Engineer</h2>
+        <h2>Construire des Pipelines de Données en Batch sur Google Cloud</h2>
+    </header>
 
-    <h1>Quiz : Récapitulatif rapide de EL, ELT et ETL</h1>
+    <h2>Quiz : Récapitulatif rapide de EL, ELT et ETL</h2>
 
     <div class="quiz-container">
         <form id="quizForm">
@@ -201,10 +217,10 @@
 
     <!-- Section des boutons de navigation -->
     <section>
-      <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
-      <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/partie-3/cours/section-3-2.html">← retour à la partie du cours</a></button>
-      <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-3/cours/section-3-3.html">Partie suivante →</a></button>
-      <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-3/quiz/quiz-3-3.html">Quiz cours suivant→ </a></button>
+      <button type="submit" class="submit-btn"> <h2><a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></h2></button>
+      <button type="submit" class="submit-btn"> <h2><a href="/Cloud-Data-Engineer-Certificat/partie-3/cours/section-3-2.html">← retour à la partie du cours</a></h2></button>
+      <button type="submit" class="submit-btn"> <h2><a  href="/Cloud-Data-Engineer-Certificat/partie-3/cours/section-3-3.html">Partie suivante →</a></h2></button>
+      <button type="submit" class="submit-btn"> <h2><a  href="/Cloud-Data-Engineer-Certificat/partie-3/quiz/quiz-3-3.html">Quiz cours suivant→ </a></h2></button>
     </section>
 
     <script>
@@ -247,6 +263,10 @@
             document.getElementById("feedback").style.display = "block";
         });
     </script>
-    
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
 </body>
 </html>
