@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction à l'Ingénierie des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h3 {
+            color: white;
+            font-size: 22px;
+        }
+        p {
+            margin-bottom: 15px;
+            margin-left: 30px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative; /* Changement de fixed à relative */
+            width: 100%;
+        }
+        section a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h3>Prépartion Certificat : Cloud Data Engineer</h3>
+    <h3>Construire des Pipelines de Données en Batch sur Google Cloud</h3>
+</header>
+///////////////////////////////
+<h1>🔄 ELT ou ETL ? Bien choisir selon les cas</h1>
+
+<h2>📌 Rappel sur ELT avec SQL</h2>
+<p>Dans la leçon précédente, nous avons vu comment utiliser <strong>SQL dans un pipeline ELT</strong> pour garantir la qualité des données. L’idée principale : <strong>vous n'avez pas toujours besoin d’un ETL</strong>. Même si des transformations sont nécessaires, l’approche ELT peut suffire.</p>
+
+<h2>⚠️ Mais ELT ne suffit pas toujours</h2>
+<p>Il existe cependant des situations où ELT atteint ses limites, notamment lorsque :</p>
+<ul>
+    <li>Les transformations <strong>ne peuvent pas être exprimées en SQL</strong></li>
+    <li>Les transformations sont <strong>trop complexes</strong> pour du SQL pur</li>
+</ul>
+
+<h2>📚 Exemples concrets</h2>
+<ul>
+    <li><strong>🌍 Traduction de contenu :</strong> Traduire un texte de l’espagnol vers l’anglais nécessite l’appel à une API externe (comme <em>Cloud Translation API</em>). Cela n’est pas faisable directement en SQL. On peut utiliser une <em>fonction distante dans BigQuery</em>, mais cela implique du développement en dehors de BigQuery.</li>
+    
+    <li><strong>📈 Analyse comportementale :</strong> Suivre les actions de clients dans une fenêtre temporelle glissante peut être exprimé avec des agrégations SQL avancées, mais c’est bien plus simple via une logique programmée.</li>
+</ul>
+
+<h2>✅ Quand privilégier ETL ?</h2>
+<p>Voici les cas où un pipeline <strong>ETL</strong> devient indispensable :</p>
+<ul>
+    <li>📋 Lorsque les données doivent être <strong>contrôlées, transformées ou enrichies</strong> avant d’être chargées dans BigQuery</li>
+    <li>💡 Lorsque les <strong>transformations sont trop complexes</strong> pour du SQL</li>
+    <li>🔁 Lorsque le <strong>chargement est en continu (streaming)</strong> – Dataflow le gère nativement</li>
+    <li>🧪 Lorsque vous souhaitez <strong>intégrer avec des outils CI/CD</strong> et faire du test unitaire sur tous les composants</li>
+</ul>
+
+<h2>🏗️ Architecture recommandée (Google Cloud)</h2>
+<p>Voici le schéma typique d’un pipeline ETL recommandé :</p>
+<ol>
+    <li><strong>📤 Extraire</strong> les données depuis Pub/Sub, Cloud Storage, Spanner, Cloud SQL, etc.</li>
+    <li><strong>🔧 Transformer</strong> les données via <strong>Dataflow</strong></li>
+    <li><strong>📥 Charger</strong> les données dans BigQuery</li>
+</ol>
+
+<h2>🛠️ Les outils ETL de Google Cloud</h2>
+<p>Google Cloud propose plusieurs services pour l’ETL :</p>
+<ul>
+    <li><strong>🌀 Dataflow :</strong> Service entièrement géré et sans serveur basé sur Apache Beam. Il supporte le traitement <strong>batch et streaming</strong>. Des modèles prédéfinis permettent un démarrage rapide.</li>
+    <li><strong>🐘 Dataproc :</strong> Basé sur Apache Hadoop. Recommandé pour les utilisateurs expérimentés en Big Data. Permet l’exécution de jobs Spark, Hive ou MapReduce.</li>
+    <li><strong>🎛️ Data Fusion :</strong> Interface graphique simple pour créer des pipelines ETL sans écrire de code. Ces pipelines peuvent être déployés à grande échelle sur des clusters Dataproc.</li>
+</ul>
+
+<p><em>Ces outils permettent de transformer les données avant de les stocker dans un lac de données ou un entrepôt de données, afin de faciliter des analyses avancées.</em></p>
+
+//////////////////////
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a  href="section-3-6.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"> <a  href="quiz-3-5.html">Quiz → </a></button>
+  </section>
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

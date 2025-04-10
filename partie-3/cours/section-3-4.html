@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction à l'Ingénierie des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h3 {
+            color: white;
+            font-size: 22px;
+        }
+        p {
+            margin-bottom: 15px;
+            margin-left: 30px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative; /* Changement de fixed à relative */
+            width: 100%;
+        }
+        section a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h3>Prépartion Certificat : Cloud Data Engineer</h3>
+    <h3>Construire des Pipelines de Données en Batch sur Google Cloud</h3>
+</header>
+
+    <h1>✨ Améliorer la Qualité des Données avec ELT et BigQuery</h1>
+
+    <h2>🎯 Pourquoi traiter les données ?</h2>
+    <p>Dans un contexte d’analyse, le traitement des données vise souvent à améliorer leur <strong>qualité</strong>. Une donnée de mauvaise qualité peut fausser les résultats d’analyse et entraîner de <strong>mauvaises décisions stratégiques</strong>.</p>
+    
+    <h2>📌 Les cinq dimensions de la qualité des données</h2>
+    <p>Pour être fiables, les données doivent satisfaire à plusieurs critères, chacun ayant un impact spécifique :</p>
+    <ul>
+        <li><strong>✅ Validité :</strong> Les données respectent les règles métiers (ex : un billet de cinéma coûte toujours 10 € → une valeur à 7 € est invalide).</li>
+        <li><strong>🎯 Précision :</strong> Les données reflètent la réalité (ex : une adresse erronée est une donnée imprécise).</li>
+        <li><strong>📦 Complétude :</strong> Toutes les données nécessaires sont présentes (ex : une ligne sans date de vente est incomplète).</li>
+        <li><strong>🔁 Consistance :</strong> Les données sont cohérentes d’un système ou d’un calcul à l’autre (ex : deux rapports donnent des chiffres différents pour la même métrique).</li>
+        <li><strong>🎨 Uniformité :</strong> Les données sont exprimées de manière homogène (ex : "France" et "FR" ne doivent pas coexister dans le même champ pays).</li>
+    </ul>
+
+    <h2>⚠️ Conséquences d'une mauvaise qualité des données</h2>
+    <p>Une donnée de mauvaise qualité peut :</p>
+    <ul>
+        <li>Donner une vision erronée d’une situation réelle</li>
+        <li>Fauss­er des analyses et indicateurs</li>
+        <li>Mener à des décisions coûteuses ou inefficaces</li>
+    </ul>
+
+    <h2>🛠️ Détection et correction avec BigQuery & ELT</h2>
+    <p>Une fois les problèmes identifiés, BigQuery offre plusieurs outils pour les corriger efficacement :</p>
+    <ul>
+        <li><strong>💡 Doublons :</strong> Utiliser <code>COUNT(DISTINCT ...)</code> pour éviter une transformation manuelle en amont.</li>
+        <li><strong>📉 Données hors plage :</strong> Appliquer des filtres dans des vues BigQuery pour exclure les valeurs anormales.</li>
+        <li><strong>🚫 Données invalides :</strong> Créer des vues filtrées accessibles par tous, évitant l’accès direct aux données brutes.</li>
+    </ul>
+
+    <p><em>Grâce à l’approche ELT et aux fonctionnalités de BigQuery, il est souvent possible de résoudre les problèmes de qualité directement dans l’entrepôt de données, sans étapes de transformation complexes en amont.</em></p>
+
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a  href="section-3-5.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"> <a  href="quiz-3-4.html">Quiz → </a></button>
+  </section>
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

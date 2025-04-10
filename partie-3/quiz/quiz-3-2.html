@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Récapitulatif de EL, ELT et ETL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+		h2 {
+            color: #2c3e50;
+			font-size: 22px;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .answers {
+            margin-left: 20px;
+        }
+        label {
+            font-size: 16px;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #eaf2f8;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Quiz : Récapitulatif rapide de EL, ELT et ETL</h1>
+
+    <div class="quiz-container">
+        <form id="quizForm">
+            <div class="question">
+                <h2><p>1. Que signifie l'acronyme EL ?</p></h2>
+                <div class="answers">
+                    <input type="radio" id="el1" name="q1" value="A"> 
+                    <label for="el1">A. Extract, Load</label><br>
+                    <input type="radio" id="el2" name="q1" value="B"> 
+                    <label for="el2">B. Extract, Load, Transform</label><br>
+                    <input type="radio" id="el3" name="q1" value="C"> 
+                    <label for="el3">C. Extract, Transform, Load</label><br>
+                    <input type="radio" id="el4" name="q1" value="D"> 
+                    <label for="el4">D. Extract, Link, Transform</label><br>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2><p>2. Quand utilisez-vous EL dans un pipeline de données ?</p></h2>
+                <div class="answers">
+                    <input type="radio" id="eluse1" name="q2" value="A">
+                    <label for="eluse1">A. Lorsque les données nécessitent une transformation avant d'être chargées dans le système cible</label><br>
+                    <input type="radio" id="eluse2" name="q2" value="B">
+                    <label for="eluse2">B. Lorsque les données sont déjà propres et correctes</label><br>
+                    <input type="radio" id="eluse3" name="q2" value="C">
+                    <label for="eluse3">C. Lorsqu'il est nécessaire de stocker des données dans un format brut</label><br>
+                    <input type="radio" id="eluse4" name="q2" value="D">
+                    <label for="eluse4">D. Lorsqu'il faut effectuer des transformations dynamiques sur les données pendant leur chargement</label><br>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2><p>3. Quelle est la principale différence entre ELT et ETL ?</p></h2>
+                <div class="answers">
+                    <input type="radio" id="eltet1" name="q3" value="A">
+                    <label for="eltet1">A. ETL charge les données dans le système cible avant de les transformer</label><br>
+                    <input type="radio" id="eltet2" name="q3" value="B">
+                    <label for="eltet2">B. ELT charge les données dans le système cible, puis les transforme à la demande</label><br>
+                    <input type="radio" id="eltet3" name="q3" value="C">
+                    <label for="eltet3">C. ELT effectue les transformations dans un service intermédiaire avant de charger les données dans le système cible</label><br>
+                    <input type="radio" id="eltet4" name="q3" value="D">
+                    <label for="eltet4">D. ETL charge les données brutes dans un entrepôt de données sans transformation</label><br>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2><p>4. Quand serait-il approprié d'utiliser ELT ?</p></h2>
+                <div class="answers">
+                    <input type="radio" id="eltuse1" name="q4" value="A">
+                    <label for="eltuse1">A. Lorsque vous devez connaître toutes les transformations nécessaires avant de charger les données</label><br>
+                    <input type="radio" id="eltuse2" name="q4" value="B">
+                    <label for="eltuse2">B. Lorsque vous ne savez pas à l'avance quelles transformations seront nécessaires pour rendre les données utilisables</label><br>
+                    <input type="radio" id="eltuse3" name="q4" value="C">
+                    <label for="eltuse3">C. Lorsque les données sont déjà nettoyées et peuvent être chargées directement dans le système cible</label><br>
+                    <input type="radio" id="eltuse4" name="q4" value="D">
+                    <label for="eltuse4">D. Lorsque vous avez besoin de transformations complexes et coûteuses avant de charger les données</label><br>
+                </div>
+            </div>
+
+            <div class="question">
+                <h2><p>5. Quel est l'exemple de cas d'utilisation de ELT mentionné dans le texte ?</p></h2>
+                <div class="answers">
+                    <input type="radio" id="eltcase1" name="q5" value="A">
+                    <label for="eltcase1">A. Charger directement les données de fichiers journaux dans BigQuery sans transformation</label><br>
+                    <input type="radio" id="eltcase2" name="q5" value="B">
+                    <label for="eltcase2">B. Utiliser l'API Vision pour analyser des images, stocker les résultats JSON et les transformer en SQL plus tard</label><br>
+                    <input type="radio" id="eltcase3" name="q5" value="C">
+                    <label for="eltcase3">C. Extraire les données depuis Cloud Storage et les charger immédiatement dans BigQuery sans transformation</label><br>
+                    <input type="radio" id="eltcase4" name="q5" value="D">
+                    <label for="eltcase4">D. Utiliser Dataflow pour transformer des données avant de les charger dans BigQuery</label><br>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Vérifier toutes les réponses</button>
+        </form>
+
+        <div id="feedback" class="feedback" style="display: none;">
+            <p id="score"></p>
+            <p><strong>Réponses Correctes:</strong></p>
+            <ul id="correctAnswers"></ul>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("quizForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const correctAnswers = {
+                q1: "A",
+                q2: "B",
+                q3: "B",
+                q4: "B",
+                q5: "B"
+            };
+
+            let score = 0;
+            let feedbackHtml = "";
+
+            // Vérifier les réponses et calculer le score
+            for (let i = 1; i <= 5; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+
+                if (selectedAnswer) {
+                    const answer = selectedAnswer.value;
+                    if (answer === correctAnswers[`q${i}`]) {
+                        score++;
+                        feedbackHtml += `<li>Question ${i}: <span class="correct">Correct</span></li>`;
+                    } else {
+                        feedbackHtml += `<li>Question ${i}: <span class="incorrect">Incorrect (Bonne réponse : ${correctAnswers[`q${i}`]})</span></li>`;
+                    }
+                } else {
+                    feedbackHtml += `<li>Question ${i}: <span class="incorrect">Non répondue</span></li>`;
+                }
+            }
+
+            // Afficher le score et les réponses correctes
+            document.getElementById("score").textContent = `Votre score est : ${score} sur 5.`;
+            document.getElementById("correctAnswers").innerHTML = feedbackHtml;
+
+            // Afficher la section de feedback
+            document.getElementById("feedback").style.display = "block";
+        });
+    </script>
+
+    
+    <section>
+      <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+	  <button type="submit" class="submit-btn"> <a  href="section-2.html">Partie suivante →</a></button>
+	  <button type="submit" class="submit-btn"> <a  href="quiz-3-3.html">Quiz suivant → </a></button>
+    </section>
+</body>
+</html>

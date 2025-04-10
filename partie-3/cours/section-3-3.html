@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction à l'Ingénierie des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h3 {
+            color: white;
+            font-size: 22px;
+        }
+        p {
+            margin-bottom: 15px;
+            margin-left: 30px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative; /* Changement de fixed à relative */
+            width: 100%;
+        }
+        section a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h3>Prépartion Certificat : Cloud Data Engineer</h3>
+    <h3>Construire des Pipelines de Données en Batch sur Google Cloud</h3>
+</header>
+
+<h1>Récapitulatif rapide de <strong>🔹 EL</strong>, <strong>🔸 ELT</strong> et <strong>🔷 ETL</strong></h1>
+
+<p><strong>🔹 EL</strong> (Extraire et Charger) : Ce processus consiste à extraire et charger les données telles quelles dans un système.</p>
+<ul>
+    <li><strong>📤 Extraire</strong> : Extraire les données de leur source.</li>
+    <li><strong>📦 Charger</strong> : Charger directement les données brutes dans le système cible, comme un entrepôt de données (par exemple, <strong>BigQuery</strong>).</li>
+</ul>
+
+<p><strong>🔸 ELT</strong> (Extraire, Charger et Transformer) : Cela permet de charger les données brutes dans le système cible et de les transformer quand elles sont nécessaires. Par exemple, vous pouvez fournir un accès aux données brutes via une vue.</p>
+<ul>
+    <li><strong>📤 Extraire</strong> : Extraire les données depuis la source.</li>
+    <li><strong>📦 Charger</strong> : Charger les données dans le système cible.</li>
+    <li><strong>🔄 Transformer</strong> : Transformer les données à la demande via une vue ou un job SQL, selon les besoins.</li>
+</ul>
+
+<p><strong>🔷 ETL</strong> (Extraire, Transformer et Charger) : Ce processus d'intégration de données permet de transformer les données avant de les charger dans le système cible.</p>
+<ul>
+    <li><strong>📤 Extraire</strong> : Extraire les données de la source.</li>
+    <li><strong>🔄 Transformer</strong> : Transformer les données dans un service intermédiaire (par exemple, <strong>Dataflow</strong>).</li>
+    <li><strong>📦 Charger</strong> : Charger les données transformées dans le système cible, comme un entrepôt de données (par exemple, <strong>BigQuery</strong>).</li>
+</ul>
+
+<h2>Quand utiliser <strong>🔹 EL</strong> ?</h2>
+<p>Utilisez <strong>EL</strong> uniquement si les données sont déjà propres et prêtes à être utilisées :</p>
+<ul>
+    <li><strong>📂 Fichiers journaux</strong> dans <strong>Cloud Storage</strong> (par exemple, CSV, JSON) peuvent être extraits et chargés directement dans <strong>BigQuery</strong>.</li>
+    <li><strong>🕹️ Micro-batchs</strong> : Chaque fois qu'un nouveau fichier arrive dans <strong>Cloud Storage</strong>, une <strong>Cloud Function</strong> se lance pour charger les données dans <strong>BigQuery</strong>.</li>
+</ul>
+
+<h2>Quand utiliser <strong>🔸 ELT</strong> ?</h2>
+<p><strong>ELT</strong> commence par un chargement de données, puis la transformation intervient après le chargement, selon les besoins :</p>
+<ul>
+    <li><strong>📂 Chargement direct</strong> : Les données brutes sont chargées dans le système cible, puis transformées via une vue ou une requête SQL selon les besoins des utilisateurs.</li>
+    <li><strong>🔄 Transformation dynamique</strong> : Vous stockez des données brutes, par exemple un fichier <strong>JSON</strong>, puis vous appliquez une transformation en fonction de la demande (par exemple, utilisation de l'API <strong>Vision</strong> et de BigQuery pour l'analyse du <strong>JSON</strong>).</li>
+</ul>
+
+<h2>Quand utiliser <strong>🔷 ETL</strong> ?</h2>
+<p>Utilisez <strong>ETL</strong> quand vous devez transformer les données avant de les charger dans le système cible :</p>
+<ul>
+    <li><strong>🔄 Transformation préalable</strong> : Les données sont d'abord extraites et transformées dans un service comme <strong>Dataflow</strong> avant d'être chargées dans un entrepôt de données comme <strong>BigQuery</strong>.</li>
+    <li><strong>📦 Chargement après transformation</strong> : Les données sont nettoyées, filtrées et modifiées avant de rejoindre le stockage final.</li>
+</ul>
+
+<p><strong>🔄 Exemple de cas d'utilisation :</strong> Vous recevez une image, vous invoquez l'API <strong>Vision</strong> et récupérez des informations au format <strong>JSON</strong>. Vous stockez ce <strong>JSON</strong> dans son format brut dans <strong>BigQuery</strong>, puis vous l'analysez via une transformation SQL pour extraire des informations spécifiques, telles que des logos.</p>
+
+<section>
+    <a href="section-2.html">Partie suivante →</a>
+    <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a>
+</section>
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>
