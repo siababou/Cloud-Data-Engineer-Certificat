@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction à l'Ingénierie des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h3 {
+            color: white;
+            font-size: 22px;
+        }
+        p {
+            margin-bottom: 15px;
+            margin-left: 30px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative; /* Changement de fixed à relative */
+            width: 100%;
+        }
+        section a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h3>Prépartion Certificat : Cloud Data Engineer</h3>
+    <h3>Construire des Pipelines de Données en Batch sur Google Cloud</h3>
+</header>
+<!--**********************************************************************-->
+<h1>💡 Qu'est-ce qu'un pipeline batch ?</h1>
+  
+<p>Un <strong>pipeline batch</strong> est un pipeline qui traite une quantité de données définie, puis se termine. Par exemple, vous pourriez avoir un pipeline batch qui s'exécute une fois par jour. Il prend toutes les transactions de crédit, de débit et de transfert d'argent de la journée, équilibre les comptes, puis écrit les données réconciliées dans un entrepôt de données.</p>
+
+<h2>🔄 Quelle architecture utiliser ?</h2>
+<p>Si vous devez écrire un tel pipeline pour équilibrer les comptes, quel modèle choisir ?</p>
+<ul>
+  <li><strong>EL</strong> : Extraction et chargement. (<em>Extrait les données et les charge telles quelles.</em>)</li>
+  <li><strong>ELT</strong> : Extraction, chargement, puis transformation à la volée. (<em>Charge les données puis effectue les transformations après coup.</em>)</li>
+  <li><strong>ETL</strong> : Extraction, transformation, puis chargement. (<em>Extrait les données, les transforme, puis les charge dans l'entrepôt de données.</em>)</li>
+</ul>
+
+<h2>⚙️ Choisir la bonne approche</h2>
+<p>Le choix entre <strong>EL</strong>, <strong>ELT</strong>, et <strong>ETL</strong> dépend des transformations nécessaires et des considérations liées à la qualité des données :</p>
+<ul>
+  <li>Si les transformations sont simples et peuvent être effectuées après le chargement, <strong>ELT</strong> peut être plus approprié.</li>
+  <li>Si vous devez effectuer des transformations complexes avant de charger les données, <strong>ETL</strong> est souvent préféré.</li>
+  <li><strong>EL</strong> peut être utilisé si les données sont déjà dans un format adéquat et qu'il suffit de les charger sans transformation.</li>
+</ul>
+
+<h2>🛠️ Construction de pipelines dans BigQuery</h2>
+<p>Dans BigQuery, vous pouvez créer des pipelines EL et ELT en fonction des besoins de votre projet. Nous explorerons aussi les situations où EL et ELT ne sont pas suffisants et pourquoi vous pourriez vouloir utiliser ETL à la place.</p>
+
+<p>💡 <em>Conclusion :</em> Le choix entre EL, ELT, et ETL dépend des transformations et de la qualité des données à traiter.</p>
+
+<!--**********************************************************************-->
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a href="section-3-3.html">← Partie précédente</a></button>
+    <button type="submit" class="submit-btn"> <a  href="section-3-5.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-3/quiz/quiz-3-4.html">Quiz → </a></button>
+  </section>
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

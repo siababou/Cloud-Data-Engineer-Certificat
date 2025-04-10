@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             background-color: #f4f4f9;
-            margin: 800; /* Enlève les marges par défaut */
+            margin: 0;
             padding: 0;
             padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
         }
@@ -24,12 +24,13 @@
             font-size: 22px;
 			margin-left: 20px;
         }
-        h2 {
+        h2, h3 {
             color: #2c3e50;
             font-size: 22px;
 			margin-left: 20px;
         }
-        h3 {
+
+		h4 {
             color: white;
             font-size: 22px;
         }
@@ -75,56 +76,44 @@
 
 <body>
 <header>
-    <h3>Prépartion Certificat : Cloud Data Engineer</h3>
-    <h3>Construire des Pipelines de Données en Batch sur Google Cloud</h3>
+    <h4>Prépartion Certificat : Cloud Data Engineer</h4>
+    <h4>Construire des Pipelines de Données en Batch sur Google Cloud</h4>
 </header>
-
 <!--**********************************************************************-->
-<h1>🔄 ELT ou ETL ? Bien choisir selon les cas</h1>
+<h2>🔄 Résumé : Quand utiliser E-T-L au lieu de E-L-T</h2>
 
-<h2>📌 Rappel sur ELT avec SQL</h2>
-<p>Dans la leçon précédente, nous avons vu comment utiliser <strong>SQL dans un pipeline ELT</strong> pour garantir la qualité des données. L’idée principale : <strong>vous n'avez pas toujours besoin d’un ETL</strong>. Même si des transformations sont nécessaires, l’approche ELT peut suffire.</p>
+<p>Dans la leçon précédente, nous avons vu comment utiliser SQL dans une pipeline <strong>E-L-T</strong> pour gérer les problèmes de qualité des données. Cependant, <strong>il existe des cas où le E-T-L est plus adapté</strong>.</p>
 
-<h2>⚠️ Mais ELT ne suffit pas toujours</h2>
-<p>Il existe cependant des situations où ELT atteint ses limites, notamment lorsque :</p>
+<h3>📌 Quand E-L-T ne suffit pas :</h3>
 <ul>
-    <li>Les transformations <strong>ne peuvent pas être exprimées en SQL</strong></li>
-    <li>Les transformations sont <strong>trop complexes</strong> pour du SQL pur</li>
+  <li>🌐 <strong>Appels à des API externes</strong> : Exemple — traduction de texte avec l’API Cloud Translation (ex : espagnol → anglais). Nécessite un code externe à BigQuery.</li>
+  <li>🧠 <strong>Logique métier complexe</strong> : Par exemple, l’analyse de séquences d’actions clients dans une fenêtre temporelle est possible en SQL, mais bien plus simple en code.</li>
 </ul>
 
-<h2>📚 Exemples concrets</h2>
-<ul>
-    <li><strong>🌍 Traduction de contenu :</strong> Traduire un texte de l’espagnol vers l’anglais nécessite l’appel à une API externe (comme <em>Cloud Translation API</em>). Cela n’est pas faisable directement en SQL. On peut utiliser une <em>fonction distante dans BigQuery</em>, mais cela implique du développement en dehors de BigQuery.</li>
-    
-    <li><strong>📈 Analyse comportementale :</strong> Suivre les actions de clients dans une fenêtre temporelle glissante peut être exprimé avec des agrégations SQL avancées, mais c’est bien plus simple via une logique programmée.</li>
-</ul>
-
-<h2>✅ Quand privilégier ETL ?</h2>
-<p>Voici les cas où un pipeline <strong>ETL</strong> devient indispensable :</p>
-<ul>
-    <li>📋 Lorsque les données doivent être <strong>contrôlées, transformées ou enrichies</strong> avant d’être chargées dans BigQuery</li>
-    <li>💡 Lorsque les <strong>transformations sont trop complexes</strong> pour du SQL</li>
-    <li>🔁 Lorsque le <strong>chargement est en continu (streaming)</strong> – Dataflow le gère nativement</li>
-    <li>🧪 Lorsque vous souhaitez <strong>intégrer avec des outils CI/CD</strong> et faire du test unitaire sur tous les composants</li>
-</ul>
-
-<h2>🏗️ Architecture recommandée (Google Cloud)</h2>
-<p>Voici le schéma typique d’un pipeline ETL recommandé :</p>
+<h3>⚙️ Solution recommandée : E-T-L avec Dataflow</h3>
+<p>Architecture type :</p>
 <ol>
-    <li><strong>📤 Extraire</strong> les données depuis Pub/Sub, Cloud Storage, Spanner, Cloud SQL, etc.</li>
-    <li><strong>🔧 Transformer</strong> les données via <strong>Dataflow</strong></li>
-    <li><strong>📥 Charger</strong> les données dans BigQuery</li>
+  <li>📥 <strong>Extraction</strong> : depuis Pub/Sub, Cloud Storage, Spanner, Cloud SQL...</li>
+  <li>🔧 <strong>Transformation</strong> : avec <strong>Dataflow</strong></li>
+  <li>📤 <strong>Chargement</strong> : vers BigQuery</li>
 </ol>
 
-<h2>🛠️ Les outils ETL de Google Cloud</h2>
-<p>Google Cloud propose plusieurs services pour l’ETL :</p>
+<h4>🕒 Cas d’usage pour E-T-L :</h4>
 <ul>
-    <li><strong>🌀 Dataflow :</strong> Service entièrement géré et sans serveur basé sur Apache Beam. Il supporte le traitement <strong>batch et streaming</strong>. Des modèles prédéfinis permettent un démarrage rapide.</li>
-    <li><strong>🐘 Dataproc :</strong> Basé sur Apache Hadoop. Recommandé pour les utilisateurs expérimentés en Big Data. Permet l’exécution de jobs Spark, Hive ou MapReduce.</li>
-    <li><strong>🎛️ Data Fusion :</strong> Interface graphique simple pour créer des pipelines ETL sans écrire de code. Ces pipelines peuvent être déployés à grande échelle sur des clusters Dataproc.</li>
+  <li>📊 Données nécessitant contrôle de qualité ou enrichissement avant chargement</li>
+  <li>🚀 Transformation trop complexe pour être exprimée en SQL</li>
+  <li>🌊 Chargement en continu (streaming) requis</li>
+  <li>🧪 Besoin d’intégration CI/CD avec tests unitaires</li>
 </ul>
 
-<p><em>Ces outils permettent de transformer les données avant de les stocker dans un lac de données ou un entrepôt de données, afin de faciliter des analyses avancées.</em></p>
+<h3>🔧 Autres services de transformation de données Google Cloud</h3>
+<ul>
+  <li><strong>Dataflow</strong> 🧠 — Service serverless basé sur Apache Beam. Gère batch & streaming. Google fournit des <em>templates</em> prêts à l’emploi.</li>
+  <li><strong>Dataproc</strong> 🛠️ — Basé sur Apache Hadoop, adapté aux experts Hadoop.</li>
+  <li><strong>Data Fusion</strong> 🧩 — Interface graphique intuitive pour construire des pipelines E-T-L déployables sur Dataproc.</li>
+</ul>
+
+<p>✅ Tous ces services permettent de transformer des données avant de les stocker dans un <strong>data lake</strong> ou un <strong>data warehouse</strong> pour des analyses avancées.</p>
 
 <!--**********************************************************************-->
 <section>

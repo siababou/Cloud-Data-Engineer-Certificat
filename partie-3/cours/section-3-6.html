@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction à l'Ingénierie des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+		h4 {
+            color: white;
+            font-size: 22px;
+        }
+		h5 {
+			color: #2c3e50;
+			font-size: 22px;
+			margin-left: 20px;
+			text-decoration: underline;
+		}
+
+		
+        p {
+            margin-bottom: 15px;
+            margin-left: 30px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative; /* Changement de fixed à relative */
+            width: 100%;
+        }
+        section a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h4>Prépartion Certificat : Cloud Data Engineer</h4>
+    <h4>Construire des Pipelines de Données en Batch sur Google Cloud</h4>
+</header>
+<!--**********************************************************************-->
+<h2>🧪 Résumé : Utiliser l'ETL pour améliorer la qualité des données</h2>
+
+<p>Bien que <strong>Dataflow</strong> et <strong>BigQuery</strong> soient recommandés pour gérer la qualité des données, certains besoins spécifiques nécessitent des solutions différentes.</p>
+
+<h3>📉 Limitations de Dataflow + BigQuery :</h3>
+<ul>
+  <li>⚡ <strong>Faible latence & haut débit</strong> : BigQuery peut traiter jusqu'à 1 million de lignes/seconde, mais avec une latence d'environ 1 seconde (100ms avec BI Engine). Pour des performances plus strictes, <strong>Bigtable</strong> est préférable.</li>
+  <li>💻 <strong>Réutilisation de pipelines Spark</strong> : Si vous avez déjà des investissements importants dans Hadoop/Spark, continuez à utiliser Spark.</li>
+  <li>🎨 <strong>Besoin de pipelines visuels</strong> : Utilisez <strong>Cloud Data Fusion</strong> pour créer des pipelines en glisser-déposer (idéal pour les utilisateurs non techniques).</li>
+</ul>
+
+<h3>🔧 Solutions ETL proposées :</h3>
+<ul>
+  <li><strong>Dataflow</strong> 🚀 : Service managé sans serveur basé sur Apache Beam. Gère batch & streaming. Requiert du code en Java/Python.</li>
+  <li><strong>Dataproc</strong> 🛠️ : Service pour les charges Hadoop. Gère traitement par lot, streaming, ML, etc. Intégration native avec Google Cloud.</li>
+  <li><strong>Cloud Data Fusion</strong> 🧩 : Intégration de données en mode visuel. Idéal pour transformation, nettoyage, cohérence, conformité. Possède aussi une API flexible pour automatiser les exécutions.</li>
+</ul>
+
+<h3>📚 Concepts importants à retenir :</h3>
+
+<h5>🔎 <u>Traçabilité des données (Lineage)</u></h5>
+<p>Il est crucial de connaître l'origine des données, les transformations qu'elles ont subies et leur état actuel. Cela permet :</p>
+<ul>
+  <li>🤝 De favoriser la confiance</li>
+  <li>🧑‍⚖️ D'assurer la conformité réglementaire</li>
+  <li>🧹 D'expliquer et corriger des anomalies</li>
+</ul>
+
+<h5>🏷️ <u>Gestion des métadonnées et des étiquettes</u></h5>
+<ul>
+  <li><strong>Labels (étiquettes)</strong> 🏷️ : Paires clé/valeur utiles pour organiser, filtrer, gérer les ressources, et même analyser les coûts Cloud.</li>
+  <li><strong>Dataplex</strong> 🧭 : Offre une <em>découvrabilité</em> des données grâce aux métadonnées directement consultables depuis BigQuery.</li>
+  <li><strong>Data Catalog</strong> 📚 : Service de gestion des métadonnées sans infrastructure, qui permet une découverte unifiée des données via recherche, API, et interface utilisateur.</li>
+</ul>
+
+<h5>🔐 <u>Fonctionnalités clés de Data Catalog :</u></h5>
+<ul>
+  <li>🎯 Découverte centralisée des données sur plusieurs projets</li>
+  <li>🔐 Contrôles d’accès au niveau entreprise</li>
+  <li>🏷️ Tags enrichis (enum, booléens, dates...)</li>
+  <li>🔍 Recherche rapide et puissante basée sur la tech Google Search</li>
+  <li>🤝 Collaboration pour la gouvernance des données</li>
+  <li>🕵️ Intégration avec Cloud DLP pour identifier les données sensibles</li>
+</ul>
+
+<p>✅ <strong>Conclusion</strong> : Quel que soit l'outil ETL utilisé, maintenir la traçabilité et enrichir les métadonnées est essentiel pour la qualité, la gouvernance, et la gestion des coûts des données dans le cloud.</p>
+
+<!--**********************************************************************-->
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a href="section-3-5.html">← Partie précédente</a></button>
+    <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-3/quiz/quiz-3-6.html">Quiz → </a></button>
+  </section>
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

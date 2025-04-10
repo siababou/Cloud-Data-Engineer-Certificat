@@ -24,12 +24,13 @@
             font-size: 22px;
 			margin-left: 20px;
         }
-        h2 {
+        h2, h3 {
             color: #2c3e50;
             font-size: 22px;
 			margin-left: 20px;
         }
-        h3 {
+
+		h4 {
             color: white;
             font-size: 22px;
         }
@@ -75,43 +76,56 @@
 
 <body>
 <header>
-    <h3>Prépartion Certificat : Cloud Data Engineer</h3>
-    <h3>Construire des Pipelines de Données en Batch sur Google Cloud</h3>
+    <h4>Prépartion Certificat : Cloud Data Engineer</h4>
+    <h4>Construire des Pipelines de Données en Batch sur Google Cloud</h4>
 </header>
+<!--**********************************************************************-->
+<h2>🎓 Comment utiliser des opérations dans BigQuery ?</h2>
 
-    <h1>✨ Améliorer la Qualité des Données avec ELT et BigQuery</h1>
+<p>Dans cette leçon, nous découvrons comment <strong>identifier et corriger les problèmes de qualité des données</strong> à l'aide des fonctionnalités SQL de BigQuery.</p>
 
-    <h2>🎯 Pourquoi traiter les données ?</h2>
-    <p>Dans un contexte d’analyse, le traitement des données vise souvent à améliorer leur <strong>qualité</strong>. Une donnée de mauvaise qualité peut fausser les résultats d’analyse et entraîner de <strong>mauvaises décisions stratégiques</strong>.</p>
-    
-    <h2>📌 Les cinq dimensions de la qualité des données</h2>
-    <p>Pour être fiables, les données doivent satisfaire à plusieurs critères, chacun ayant un impact spécifique :</p>
+<h3>🔍 Types de Problèmes de Qualité et Solutions</h3>
+
+<ul>
+  <li>🧹 <strong>Filtrer les données invalides</strong> : Utiliser des <code>Views</code> avec une clause <code>WHERE</code> pour exclure par exemple les quantités négatives.</li>
+  <li>📊 <strong>Groupes non significatifs</strong> : Utiliser <code>GROUP BY</code> suivi de <code>HAVING</code> pour exclure les groupes avec peu de données (&lt; 10).</li>
+  <li>⚠️ <strong>NULL vs BLANK</strong> :
     <ul>
-        <li><strong>✅ Validité :</strong> Les données respectent les règles métiers (ex : un billet de cinéma coûte toujours 10 € → une valeur à 7 € est invalide).</li>
-        <li><strong>🎯 Précision :</strong> Les données reflètent la réalité (ex : une adresse erronée est une donnée imprécise).</li>
-        <li><strong>📦 Complétude :</strong> Toutes les données nécessaires sont présentes (ex : une ligne sans date de vente est incomplète).</li>
-        <li><strong>🔁 Consistance :</strong> Les données sont cohérentes d’un système ou d’un calcul à l’autre (ex : deux rapports donnent des chiffres différents pour la même métrique).</li>
-        <li><strong>🎨 Uniformité :</strong> Les données sont exprimées de manière homogène (ex : "France" et "FR" ne doivent pas coexister dans le même champ pays).</li>
+      <li>NULL = absence de donnée</li>
+      <li>BLANK = chaîne vide (<code>""</code>)</li>
+      <li>🎯 Penser à ce que vous souhaitez filtrer : l’un, l’autre ou les deux</li>
     </ul>
+  </li>
+  <li>📈 <strong>Comptage de valeurs valides</strong> : Utiliser <code>COUNTIF</code> ou des conditions <code>IF</code> pour exclure certaines valeurs des calculs.</li>
+</ul>
 
-    <h2>⚠️ Conséquences d'une mauvaise qualité des données</h2>
-    <p>Une donnée de mauvaise qualité peut :</p>
-    <ul>
-        <li>Donner une vision erronée d’une situation réelle</li>
-        <li>Fauss­er des analyses et indicateurs</li>
-        <li>Mener à des décisions coûteuses ou inefficaces</li>
-    </ul>
+<h3>🎯 Exactitude</h3>
+<ul>
+  <li>Vérifier les données par rapport à des valeurs de référence.</li>
+  <li>💰 Exemple : recalculer le <em>sub_total</em> = <code>quantity_ordered * item_price</code>.</li>
+  <li>✅ Utiliser <code>IN</code> pour valider si une donnée appartient à une liste canonique.</li>
+</ul>
 
-    <h2>🛠️ Détection et correction avec BigQuery & ELT</h2>
-    <p>Une fois les problèmes identifiés, BigQuery offre plusieurs outils pour les corriger efficacement :</p>
-    <ul>
-        <li><strong>💡 Doublons :</strong> Utiliser <code>COUNT(DISTINCT ...)</code> pour éviter une transformation manuelle en amont.</li>
-        <li><strong>📉 Données hors plage :</strong> Appliquer des filtres dans des vues BigQuery pour exclure les valeurs anormales.</li>
-        <li><strong>🚫 Données invalides :</strong> Créer des vues filtrées accessibles par tous, évitant l’accès direct aux données brutes.</li>
-    </ul>
+<h3>📉 Complétude</h3>
+<ul>
+  <li>📌 Identifier les données manquantes (<code>NULL</code>).</li>
+  <li>🔄 Fonctions utiles : <code>NULLIF</code>, <code>COUNTIF</code>, <code>COALESCE</code>.</li>
+  <li>🔗 Utiliser <code>UNION</code> pour intégrer des données manquantes (ex : mois absents).</li>
+  <li>⚙️ Vérification des fichiers avec des <strong>checksums</strong> comme <code>MD5</code>.</li>
+</ul>
 
-    <p><em>Grâce à l’approche ELT et aux fonctionnalités de BigQuery, il est souvent possible de résoudre les problèmes de qualité directement dans l’entrepôt de données, sans étapes de transformation complexes en amont.</em></p>
+<h3>🔁 Consistance</h3>
+<ul>
+  <li>📌 Problèmes fréquents : doublons, formats incohérents (ex : timezone, padding).</li>
+  <li>🔍 Comparer <code>COUNT</code> vs <code>COUNT DISTINCT</code> pour détecter les doublons.</li>
+  <li>🧽 Nettoyer les chaînes avec des <strong>fonctions de manipulation de texte</strong>.</li>
+  <li>📏 <strong>Non-uniformité des unités</strong> (ex : cm vs mm) → utiliser <code>CAST</code> et <code>FORMAT()</code>.</li>
+  <li>📝 Toujours <strong>documenter</strong> les unités et les formats utilisés.</li>
+</ul>
 
+<p>✅ En résumé, BigQuery offre des outils puissants pour traiter les problèmes de qualité sans nécessiter de transformation intermédiaire. Il est essentiel d’utiliser judicieusement les fonctions SQL pour garantir la validité, l’exactitude, la complétude, la consistance et l’uniformité des données.</p>
+
+<!--**********************************************************************-->
 <section>
     <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
     <button type="submit" class="submit-btn"> <a href="section-3-3.html">← Partie précédente</a></button>
