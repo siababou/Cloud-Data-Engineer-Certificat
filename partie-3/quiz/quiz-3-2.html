@@ -5,57 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz : Récapitulatif de EL, ELT et ETL</title>
     <style>
+        /* Style du body pour centrer le contenu */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            padding: 20px;
+            font-family: Arial, sans-serif; /* Choix de la police */
+            background-color: #f4f4f9; /* Couleur de fond */
+            display: flex; /* Utilisation de Flexbox pour centrer le contenu */
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+            min-height: 100vh; /* Assure que la page prend toute la hauteur de la fenêtre */
+            margin: 0; /* Enlève les marges par défaut */
+            padding: 20px; /* Ajoute du padding autour du contenu */
+            flex-direction: column; /* Organise les éléments enfants en colonne */
         }
+
+        /* Style du titre principal */
         h1 {
-            color: #2c3e50;
+            color: #2c3e50; /* Couleur du titre */
+            text-align: center; /* Centre le titre horizontalement */
+            margin-bottom: 20px; /* Espace sous le titre */
         }
-		h2 {
-            color: #2c3e50;
-			font-size: 22px;
+
+        /* Style des sous-titres */
+        h2 {
+            color: #2c3e50; /* Couleur du texte */
+            font-size: 22px; /* Taille du texte */
         }
+
+        /* Style du conteneur principal du quiz */
         .quiz-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white; /* Fond blanc */
+            padding: 20px; /* Espace interne */
+            border-radius: 8px; /* Coins arrondis */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre portée légère */
+            width: 100%; /* Prend toute la largeur disponible */
+            max-width: 800px; /* Limite la largeur à 800px pour un rendu agréable */
         }
+
+        /* Style des questions */
         .question {
-            font-size: 18px;
-            margin-bottom: 10px;
+            font-size: 18px; /* Taille de la police pour les questions */
+            margin-bottom: 10px; /* Espace sous chaque question */
         }
+
+        /* Style des options de réponse */
         .answers {
-            margin-left: 20px;
+            margin-left: 20px; /* Décale les réponses vers la droite */
         }
+
+        /* Style des labels */
         label {
-            font-size: 16px;
+            font-size: 16px; /* Taille de la police pour les labels */
         }
+
+        /* Style des boutons */
         .submit-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            background-color: #3498db; /* Couleur de fond du bouton */
+            color: white; /* Couleur du texte */
+            padding: 10px 20px; /* Espacement interne du bouton */
+            border: none; /* Pas de bordure */
+            border-radius: 4px; /* Coins arrondis */
+            cursor: pointer; /* Change le curseur en main lors du survol */
+            width: 100%; /* Le bouton prend toute la largeur du conteneur */
+            text-align: center; /* Centre le texte dans le bouton */
         }
+
+        /* Effet au survol du bouton */
         .submit-btn:hover {
-            background-color: #2980b9;
+            background-color: #2980b9; /* Couleur de fond au survol */
         }
+
+        /* Style pour le feedback après avoir soumis les réponses */
         .feedback {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #eaf2f8;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px; /* Espace au-dessus du feedback */
+            padding: 20px; /* Espace interne */
+            background-color: #eaf2f8; /* Couleur de fond du feedback */
+            border-radius: 8px; /* Coins arrondis */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre portée légère */
         }
+
+        /* Style pour les réponses correctes */
         .correct {
-            color: green;
+            color: green; /* Texte en vert pour les réponses correctes */
         }
+
+        /* Style pour les réponses incorrectes */
         .incorrect {
-            color: red;
+            color: red; /* Texte en rouge pour les réponses incorrectes */
+        }
+
+        /* Style pour la section des boutons en bas */
+        section {
+            display: flex; /* Utilisation de Flexbox pour aligner les boutons */
+            justify-content: flex-end; /* Aligne les boutons à droite */
+            gap: 20px; /* Espace entre les boutons */
+            margin-top: 20px; /* Espace au-dessus des boutons */
+            width: 100%; /* Prend toute la largeur disponible */
+        }
+
+        /* Style des liens dans les boutons */
+        button a {
+            text-decoration: none; /* Enlève la décoration des liens */
+            color: white; /* Assure que le texte des liens est blanc */
+            display: inline-block; /* Fait en sorte que les liens se comportent comme des blocs */
+            padding: 10px 20px; /* Espacement interne du lien */
+            text-align: center; /* Centre le texte dans le lien */
+            width: 100%; /* Le lien prend toute la largeur du bouton */
         }
     </style>
 </head>
@@ -145,6 +199,13 @@
         </div>
     </div>
 
+    <!-- Section des boutons de navigation -->
+    <section>
+      <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+      <button type="submit" class="submit-btn"> <a href="section-3.html">Partie suivante →</a></button>
+      <button type="submit" class="submit-btn"> <a href="quiz-3-3.html">Quiz suivant → </a></button>
+    </section>
+
     <script>
         document.getElementById("quizForm").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -185,12 +246,6 @@
             document.getElementById("feedback").style.display = "block";
         });
     </script>
-
     
-    <section>
-      <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
-	  <button type="submit" class="submit-btn"> <a  href="section-2.html">Partie suivante →</a></button>
-	  <button type="submit" class="submit-btn"> <a  href="quiz-3-3.html">Quiz suivant → </a></button>
-    </section>
 </body>
 </html>
