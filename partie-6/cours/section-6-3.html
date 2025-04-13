@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction à l'Ingénierie des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h3 {
+            color: white;
+            font-size: 22px;
+        }
+        p {
+            margin-bottom: 15px;
+            margin-left: 30px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative; /* Changement de fixed à relative */
+            width: 100%;
+        }
+        section a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h3>Power BI</h3>
+        <h3>Dataflow et Dataset</h3>
+    </header>
+<!--**********************************************************************-->
+<h2>1. Différence entre Dataflow et Dataset</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Dataflow</th>
+      <th>Dataset</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Rôle</td>
+      <td>ETL (préparation des données)</td>
+      <td>Modélisation et visualisation des données</td>
+    </tr>
+    <tr>
+      <td>Outil utilisé</td>
+      <td>Power Query Online</td>
+      <td>Power BI Desktop</td>
+    </tr>
+    <tr>
+      <td>Stockage</td>
+      <td>Données stockées dans le cloud (Dataverse / Data Lake)</td>
+      <td>Stockées dans Power BI Service ou en cache local</td>
+    </tr>
+    <tr>
+      <td>Réutilisable ?</td>
+      <td>Oui, plusieurs datasets peuvent consommer un dataflow</td>
+      <td>Non, chaque dataset est autonome</td>
+    </tr>
+    <tr>
+      <td>Modèle de données</td>
+      <td>Pas de modèle : juste des tables (pas de relations, DAX, etc)</td>
+      <td>Contient tables, relations, mesures DAX, RLS, etc.</td>
+    </tr>
+    <tr>
+      <td>Objectif</td>
+      <td>Nettoyage, transformation, mutualisation</td>
+      <td>Modélisation, calculs, visualisation</td>
+    </tr>
+    <tr>
+      <td>Mise à jour des données</td>
+      <td>Refresh planifiable, peut être incrémental en Premium</td>
+      <td>Refresh aussi planifiable</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>En résumé :</strong><br>
+<strong>Dataflow = ETL</strong><br>
+<strong>Dataset = Modèle + Analytics</strong>
+</p>
+
+<p>
+Dans une bonne architecture Power BI, tu mets les <strong>transformations lourdes dans le Dataflow</strong>, 
+et tu construis le <strong>modèle + visuels dans le Dataset</strong>.
+</p>
+
+<hr>
+
+<h2>2. Intégration Dataflow + BigQuery (GCP)</h2>
+
+<h3>Cas d’usage :</h3>
+<p>
+Extraire des données de BigQuery, les transformer dans Power BI via un Dataflow, puis les exploiter dans un Dataset / Rapport.
+</p>
+
+<h3>Étapes clés :</h3>
+
+<ol>
+  <li>
+    <strong>Connexion à BigQuery depuis un Dataflow</strong><br>
+    Depuis Power BI Service, crée un nouveau Dataflow.<br>
+    Choisis comme source <strong>Google BigQuery</strong>.<br>
+    Authentifie-toi via OAuth 2.0 (avec ton compte Google ou un compte de service si activé).<br>
+    Navigue dans ton projet, dataset et table BigQuery.
+  </li>
+
+  <li>
+    <strong>Transformation dans Power Query Online</strong><br>
+    Applique tes étapes de nettoyage : filtrage, jointures, typage, colonnes calculées, etc.<br>
+    Garde les transformations simples et optimisées (pour ne pas surcharger BigQuery au runtime).
+  </li>
+
+  <li>
+    <strong>Stockage et Refresh</strong><br>
+    Les données sont extraites et stockées dans Power BI Service (mode Import).<br>
+    Tu peux configurer un <strong>refresh planifié</strong> (idéalement en heures creuses).<br>
+    Si tu as Power BI Premium, active le <strong>chargement incrémental</strong> pour éviter de recharger toute la table à chaque fois.
+  </li>
+
+  <li>
+    <strong>Consommation dans un Dataset</strong><br>
+    Depuis Power BI Desktop, connecte-toi à ton Dataflow comme source.<br>
+    Crée ton modèle, mesures DAX, relations, visuels, etc.<br>
+    Publie le dataset dans le service pour qu’il se mette à jour après le Dataflow.
+  </li>
+</ol>
+
+<h3>Avantages de cette intégration :</h3>
+<ul>
+  <li>Allège la charge sur BigQuery (moins de DirectQuery en live).</li>
+  <li>Meilleure maîtrise des coûts (car les requêtes BigQuery sont facturées à la volumétrie).</li>
+  <li>Centralise les transformations métier.</li>
+  <li>Donne une architecture scalable et maintenable.</li>
+</ul>
+
+<!--**********************************************************************-->
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a href="section-6-2.html">← Partie précédente</a></button>
+    <button type="submit" class="submit-btn"> <a  href="section-6-4.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-6/quiz/quiz-6-3.html">Quiz → </a></button>
+  </section>
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

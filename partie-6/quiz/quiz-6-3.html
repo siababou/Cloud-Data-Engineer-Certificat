@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction à l'Ingénierie des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h3 {
+            color: white;
+            font-size: 22px;
+        }
+        p {
+            margin-bottom: 15px;
+            margin-left: 30px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative; /* Changement de fixed à relative */
+            width: 100%;
+        }
+        section a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h3>Power BI</h3>
+        <h3>Dataflow et Dataset</h3>
+    </header>
+<!--**********************************************************************-->
+<h2>FAQ : Power BI – Dataflow vs Dataset & Intégration avec BigQuery</h2>
+
+<h2>💡 Quelle est la différence entre un Dataflow et un Dataset dans Power BI ?</h2>
+<p>
+  <strong>Dataflow :</strong> outil d’<em>ETL (Extract, Transform, Load)</em> dans le cloud, utilisé pour la préparation et le nettoyage des données avec Power Query Online. Il est centralisé, réutilisable, et stocke les données dans le cloud.
+</p>
+<p>
+  <strong>Dataset :</strong> représente le <em>modèle de données</em> utilisé pour les visualisations. Il contient les tables, les relations, les mesures DAX, la sécurité RLS, etc. Chaque dataset est autonome et utilisé dans Power BI Desktop.
+</p>
+<p><strong>👉 En résumé :</strong> Dataflow = Préparation des données | Dataset = Modélisation & Visualisation</p>
+
+<h2>🔗 Peut-on connecter un Dataflow à BigQuery (Google Cloud) ?</h2>
+<p>Oui ! Power BI permet de se connecter à BigQuery directement depuis un Dataflow via Power Query Online.</p>
+
+<h2>⚙️ Quelles sont les étapes pour intégrer BigQuery avec un Dataflow ?</h2>
+<ol>
+  <li><strong>Connexion :</strong> Crée un Dataflow dans Power BI Service et choisis Google BigQuery comme source. Authentifie-toi via OAuth 2.0.</li>
+  <li><strong>Transformation :</strong> Utilise Power Query Online pour filtrer, joindre et transformer les données selon tes besoins.</li>
+  <li><strong>Stockage & Refresh :</strong> Les données sont importées dans Power BI Service. Tu peux planifier un rafraîchissement (et utiliser le refresh incrémental en Premium).</li>
+  <li><strong>Consommation :</strong> Connecte-toi au Dataflow depuis Power BI Desktop pour créer ton dataset, ajouter des mesures DAX, et construire ton rapport.</li>
+</ol>
+
+<h2>🎯 Quels sont les avantages de cette architecture Dataflow + BigQuery ?</h2>
+<ul>
+  <li>Réduction de la charge sur BigQuery (moins de DirectQuery)</li>
+  <li>Meilleure maîtrise des coûts (facturation par volume de requêtes)</li>
+  <li>Centralisation des transformations et logique métier</li>
+  <li>Architecture scalable, réutilisable et plus maintenable</li>
+</ul>
+
+
+<!--**********************************************************************-->
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a href="section-6-3.html">← Partie précédente</a></button>
+    <button type="submit" class="submit-btn"> <a  href="section-6-5.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-6/quiz/quiz-6-4.html">Quiz → </a></button>
+  </section>
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

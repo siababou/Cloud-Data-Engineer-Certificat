@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction à l'Ingénierie des Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px; /* Ajout pour éviter que le footer ne soit caché */
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 22px;
+			margin-left: 20px;
+        }
+        h3 {
+            color: white;
+            font-size: 22px;
+        }
+        p {
+            margin-bottom: 15px;
+            margin-left: 30px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative; /* Changement de fixed à relative */
+            width: 100%;
+        }
+        section a {
+            display: inline-block;
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h3>Power BI</h3>
+    <h3>Écosystème Power BI</h3>
+</header>
+<!--**********************************************************************-->
+<h2>Écosystème Power BI</h2>
+
+<ol>
+  <li>
+    <strong>Power BI Desktop</strong><br>
+    <em>Outil de développement local</em><br>
+    Permet de se connecter aux données, transformer (Power Query), modéliser (relations, DAX) et créer des rapports interactifs. C’est ici que commence tout projet Power BI.
+  </li>
+
+  <li>
+    <strong>Power BI Service (app.powerbi.com)</strong><br>
+    <em>Plateforme cloud de publication et de partage</em><br>
+    C’est l’environnement en ligne pour :
+    <ul>
+      <li>Publier les rapports créés dans Desktop</li>
+      <li>Gérer les workspaces (projets/collaboration)</li>
+      <li>Programmer les refreshs</li>
+      <li>Partager avec les utilisateurs</li>
+      <li>Créer des dashboards à partir de rapports</li>
+      <li>Superviser les usages et la sécurité</li>
+    </ul>
+  </li>
+
+  <li>
+    <strong>Power BI Dataflows</strong><br>
+    <em>ETL dans le cloud (Power Query Online)</em><br>
+    Permet de centraliser les transformations de données, mutualiser les sources, créer des tables propres avant qu’elles soient utilisées dans plusieurs datasets.
+  </li>
+
+  <li>
+    <strong>Power BI Datasets</strong><br>
+    <em>Modèle de données central</em><br>
+    Contient les tables, relations, mesures DAX, sécurité RLS, etc. Peut être partagé entre plusieurs rapports. Le dataset est le cœur du reporting analytique.
+  </li>
+
+  <li>
+    <strong>Power BI Gateway</strong><br>
+    <em>Passerelle de connexion aux données on-premise</em><br>
+    Installée localement, elle permet à Power BI Service d’accéder à des données internes (SQL Server, Oracle, Excel local…). Obligatoire pour les sources non cloud.
+  </li>
+
+  <li>
+    <strong>Power BI Report Builder</strong><br>
+    <em>Création de rapports paginés</em><br>
+    Idéal pour les états de type PDF à imprimer ou exporter (factures, listes détaillées…). Utilisé principalement dans Power BI Premium.
+  </li>
+
+  <li>
+    <strong>Power BI Mobile</strong><br>
+    <em>Application mobile (iOS, Android)</em><br>
+    Permet de consulter les rapports et dashboards en mobilité, avec une ergonomie adaptée aux smartphones/tablettes.
+  </li>
+
+  <li>
+    <strong>Power BI Embedded</strong><br>
+    <em>Intégration de rapports dans des applications tierces</em><br>
+    Permet d’embarquer des visuels Power BI dans des portails web, des applis métiers ou clients, via API et token.
+  </li>
+
+  <li>
+    <strong>Power BI REST API / Admin Portal</strong><br>
+    <em>Administration et automatisation</em><br>
+    Utilisé pour gérer les workspaces, utilisateurs, refreshs, etc., via scripts ou outils externes. Très utile en entreprise pour industrialiser.
+  </li>
+</ol>
+
+</html>
+
+<!--**********************************************************************-->
+<section>
+  <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+  <button type="submit" class="submit-btn"> <a href="section-6-1.html">← Partie précédente</a></button>
+  <button type="submit" class="submit-btn"> <a  href="section-6-3.html">Partie suivante →</a></button>
+  <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-6/quiz/quiz-6-2.html">Quiz → </a></button>
+</section>
+
+<footer>
+    <p>&copy; 2025 Cours d'Ingénierie des Données. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>
