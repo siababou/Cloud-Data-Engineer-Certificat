@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fonctions Analytiques SQL - Exemples avec Résultats</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    background-color: #fafafa;
+    color: #222;
+    display: flex;
+    justify-content: center;
+  }
+  .container {
+    max-width: 900px;
+    width: 100%;
+    text-align: left;
+  }
+  h1, h2 {
+    color: #2a5d9f;
+  }
+  pre {
+    background: #eef6fc;
+    border-left: 5px solid #2a5d9f;
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    text-align: left;
+    margin: 0 auto 1rem auto;
+    max-width: 100%;
+  }
+  table {
+    border-collapse: collapse;
+    margin: 0 auto 2rem auto;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 0.4rem 0.8rem;
+    text-align: left;
+  }
+  th {
+    background-color: #2a5d9f;
+    color: white;
+  }
+  code {
+    background: #dbe9f9;
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+  p {
+    max-width: 700px;
+    margin-bottom: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Fonctions Analytiques SQL (Fenêtres) avec Exemples et Résultats</h1>
+
+<p>Supposons la table <code>employees</code> :</p>
+<table>
+  <thead>
+    <tr><th>id</th><th>first_name</th><th>department_id</th><th>salary</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>Jean</td><td>10</td><td>5000</td></tr>
+    <tr><td>2</td><td>Marie</td><td>10</td><td>7000</td></tr>
+    <tr><td>3</td><td>Pierre</td><td>20</td><td>4000</td></tr>
+    <tr><td>4</td><td>Lucie</td><td>20</td><td>4000</td></tr>
+    <tr><td>5</td><td>Emma</td><td>10</td><td>6000</td></tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2>1. <code>ROW_NUMBER()</code></h2>
+<p>Numérote les lignes dans l’ordre décroissant du salaire :</p>
+<pre><code>SELECT first_name, salary,
+       ROW_NUMBER() OVER (ORDER BY salary DESC) AS rang
+FROM employees;
+</code></pre>
+
+<table>
+  <thead><tr><th>first_name</th><th>salary</th><th>rang</th></tr></thead>
+  <tbody>
+    <tr><td>Marie</td><td>7000</td><td>1</td></tr>
+    <tr><td>Emma</td><td>6000</td><td>2</td></tr>
+    <tr><td>Jean</td><td>5000</td><td>3</td></tr>
+    <tr><td>Pierre</td><td>4000</td><td>4</td></tr>
+    <tr><td>Lucie</td><td>4000</td><td>5</td></tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2>2. <code>RANK()</code></h2>
+<p>Classe avec mêmes rangs pour salaires égaux mais saute les rangs suivants :</p>
+<pre><code>SELECT first_name, salary,
+       RANK() OVER (ORDER BY salary DESC) AS rang
+FROM employees;
+</code></pre>
+
+<table>
+  <thead><tr><th>first_name</th><th>salary</th><th>rang</th></tr></thead>
+  <tbody>
+    <tr><td>Marie</td><td>7000</td><td>1</td></tr>
+    <tr><td>Emma</td><td>6000</td><td>2</td></tr>
+    <tr><td>Jean</td><td>5000</td><td>3</td></tr>
+    <tr><td>Pierre</td><td>4000</td><td>4</td></tr>
+    <tr><td>Lucie</td><td>4000</td><td>4</td></tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2>3. <code>DENSE_RANK()</code></h2>
+<p>Classe sans "trous" dans les rangs :</p>
+<pre><code>SELECT first_name, salary,
+       DENSE_RANK() OVER (ORDER BY salary DESC) AS rang_dense
+FROM employees;
+</code></pre>
+
+<table>
+  <thead><tr><th>first_name</th><th>salary</th><th>rang_dense</th></tr></thead>
+  <tbody>
+    <tr><td>Marie</td><td>7000</td><td>1</td></tr>
+    <tr><td>Emma</td><td>6000</td><td>2</td></tr>
+    <tr><td>Jean</td><td>5000</td><td>3</td></tr>
+    <tr><td>Pierre</td><td>4000</td><td>4</td></tr>
+    <tr><td>Lucie</td><td>4000</td><td>4</td></tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2>4. <code>NTILE(2)</code></h2>
+<p>Divise en 2 groupes (moitiés) selon le salaire :</p>
+<pre><code>SELECT first_name, salary,
+       NTILE(2) OVER (ORDER BY salary DESC) AS groupe
+FROM employees;
+</code></pre>
+
+<table>
+  <thead><tr><th>first_name</th><th>salary</th><th>groupe</th></tr></thead>
+  <tbody>
+    <tr><td>Marie</td><td>7000</td><td>1</td></tr>
+    <tr><td>Emma</td><td>6000</td><td>1</td></tr>
+    <tr><td>Jean</td><td>5000</td><td>1</td></tr>
+    <tr><td>Pierre</td><td>4000</td><td>2</td></tr>
+    <tr><td>Lucie</td><td>4000</td><td>2</td></tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2>5. Agrégat avec partition : <code>AVG() OVER (PARTITION BY)</code></h2>
+<p>Moyenne des salaires par département :</p>
+<pre><code>SELECT first_name, department_id, salary,
+       AVG(salary) OVER (PARTITION BY department_id) AS avg_dept_salary
+FROM employees;
+</code></pre>
+
+<table>
+  <thead><tr><th>first_name</th><th>department_id</th><th>salary</th><th>avg_dept_salary</th></tr></thead>
+  <tbody>
+    <tr><td>Jean</td><td>10</td><td>5000</td><td>6000</td></tr>
+    <tr><td>Marie</td><td>10</td><td>7000</td><td>6000</td></tr>
+    <tr><td>Emma</td><td>10</td><td>6000</td><td>6000</td></tr>
+    <tr><td>Pierre</td><td>20</td><td>4000</td><td>4000</td></tr>
+    <tr><td>Lucie</td><td>20</td><td>4000</td><td>4000</td></tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2>6. <code>LAG()</code> et <code>LEAD()</code></h2>
+<p>Valeur précédente et suivante du salaire (ordre croissant) :</p>
+<pre><code>SELECT first_name, salary,
+       LAG(salary, 1) OVER (ORDER BY salary) AS salaire_prec,
+       LEAD(salary, 1) OVER (ORDER BY salary) AS salaire_suiv
+FROM employees;
+</code></pre>
+
+<table>
+  <thead><tr><th>first_name</th><th>salary</th><th>salaire_prec</th><th>salaire_suiv</th></tr></thead>
+  <tbody>
+    <tr><td>Pierre</td><td>4000</td><td></td><td>4000</td></tr>
+    <tr><td>Lucie</td><td>4000</td><td>4000</td><td>5000</td></tr>
+    <tr><td>Jean</td><td>5000</td><td>4000</td><td>6000</td></tr>
+    <tr><td>Emma</td><td>6000</td><td>5000</td><td>7000</td></tr>
+    <tr><td>Marie</td><td>7000</td><td>6000</td><td></td></tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2>Résumé des Fonctions Analytiques</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Fonction</th>
+      <th>Description</th>
+      <th>Exemple d'usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ROW_NUMBER()</code></td>
+      <td>Numérote chaque ligne dans un ordre donné, sans doublons</td>
+      <td>Classement strict des salaires décroissants</td>
+    </tr>
+    <tr>
+      <td><code>RANK()</code></td>
+      <td>Classe avec égalité, crée des "trous" dans les rangs</td>
+      <td>Rangs avec égalités sur salaires</td>
+    </tr>
+    <tr>
+      <td><code>DENSE_RANK()</code></td>
+      <td>Classe avec égalité, sans "trous" dans les rangs</td>
+      <td>Rangs denses sur salaires</td>
+    </tr>
+    <tr>
+      <td><code>NTILE(n)</code></td>
+      <td>Divise les lignes en <code>n</code> groupes égaux</td>
+      <td>Diviser en 2 groupes selon salaire</td>
+    </tr>
+    <tr>
+      <td><code>AVG() OVER (PARTITION BY ...)</code></td>
+      <td>Moyenne (ou autre agrégat) calculée par groupe sans regroupement</td>
+      <td>Moyenne des salaires par département</td>
+    </tr>
+    <tr>
+      <td><code>LAG()</code> / <code>LEAD()</code></td>
+      <td>Valeur précédente / suivante selon ordre donné</td>
+      <td>Valeur du salaire avant et après dans l’ordre</td>
+    </tr>
+  </tbody>
+</table>
+
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a href="01_fonctions-sql-completes.html">← Partie précédente</a></button>
+    <button type="submit" class="submit-btn"> <a  href="03_Transaction_sql.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-sql/quiz/quiz-sql-2.html">Question → </a></button>
+</section>
+
+</div>
+
+</body>
+</html>

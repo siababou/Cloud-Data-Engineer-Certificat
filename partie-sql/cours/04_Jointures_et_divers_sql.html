@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Points Clés SQL - Détails et Exemples</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 2rem auto;
+    max-width: 900px;
+    background-color: #f9fbff;
+    color: #222;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    color: #1a237e;
+    margin-top: 2rem;
+  }
+  pre {
+    background: #e3e9ff;
+    border-left: 5px solid #283593;
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    margin-bottom: 1rem;
+  }
+  table {
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #a3b1d9;
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+  }
+  th {
+    background-color: #283593;
+    color: white;
+  }
+  code {
+    background: #c5cae9;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+  }
+  ul {
+    margin-left: 1.5rem;
+  }
+  section {
+    margin-bottom: 3rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Points Clés à Maîtriser en SQL - Détails et Exemples</h1>
+
+<section>
+  <h2>1. Jointures (JOINS)</h2>
+  <p>Les jointures permettent de combiner les données de plusieurs tables selon une condition.</p>
+  <ul>
+    <li><strong>INNER JOIN</strong> : ne conserve que les lignes qui ont des correspondances dans les deux tables.</li>
+    <li><strong>LEFT JOIN</strong> : conserve toutes les lignes de la table de gauche, avec NULL pour les colonnes de droite si pas de correspondance.</li>
+  </ul>
+  <h3>Exemple avec INNER JOIN</h3>
+  <pre><code>SELECT e.nom, d.nom AS departement
+FROM employés e
+INNER JOIN départements d ON e.dept_id = d.id;
+</code></pre>
+  <p>Ce SELECT affiche le nom de l'employé avec le nom de son département uniquement si une correspondance existe.</p>
+  
+  <h3>Exemple avec LEFT JOIN</h3>
+  <pre><code>SELECT e.nom, d.nom AS departement
+FROM employés e
+LEFT JOIN départements d ON e.dept_id = d.id;
+</code></pre>
+  <p>Ce SELECT affiche tous les employés, même ceux sans département (departement = NULL).</p>
+</section>
+
+<section>
+  <h2>2. Sous-requêtes (Subqueries)</h2>
+  <p>Une requête imbriquée dans une autre, permettant de filtrer ou calculer dynamiquement.</p>
+  
+  <h3>Exemple : Sous-requête dans WHERE</h3>
+  <pre><code>SELECT nom, salaire
+FROM employés
+WHERE salaire &gt; (SELECT AVG(salaire) FROM employés);
+</code></pre>
+  <p>On sélectionne les employés dont le salaire est supérieur à la moyenne des salaires.</p>
+
+  <h3>Exemple : Sous-requête dans FROM</h3>
+  <pre><code>SELECT dept_id, salaire_moyen
+FROM (
+  SELECT dept_id, AVG(salaire) AS salaire_moyen
+  FROM employés
+  GROUP BY dept_id
+) AS moyenne_par_dept
+WHERE salaire_moyen &gt; 50000;
+</code></pre>
+  <p>On calcule la moyenne des salaires par département, puis on sélectionne ceux dont la moyenne dépasse 50 000.</p>
+</section>
+
+<section>
+  <h2>3. Indexes</h2>
+  <p>Les indexes sont des structures de données qui accélèrent les recherches dans les tables.</p>
+  <h3>Création d’un index simple</h3>
+  <pre><code>CREATE INDEX idx_nom ON employés(nom);</code></pre>
+  <p>Index sur la colonne <code>nom</code> de la table <code>employés</code>.</p>
+
+  <h3>Index composite</h3>
+  <pre><code>CREATE INDEX idx_dept_salaire ON employés(dept_id, salaire);</code></pre>
+  <p>Index sur deux colonnes, utile pour des requêtes filtrant sur ces colonnes.</p>
+
+  <h3>Attention</h3>
+  <ul>
+    <li>Trop d’index peuvent ralentir les insertions et mises à jour.</li>
+    <li>Il faut analyser les requêtes fréquentes pour indexer judicieusement.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4. Triggers (Déclencheurs)</h2>
+  <p>Les triggers permettent d’exécuter automatiquement du code SQL avant ou après un événement sur une table (INSERT, UPDATE, DELETE).</p>
+
+  <h3>Exemple MySQL : Ajouter une date de création automatiquement</h3>
+  <pre><code>CREATE TRIGGER avant_insert_employe
+BEFORE INSERT ON employés
+FOR EACH ROW
+SET NEW.created_at = NOW();
+</code></pre>
+
+  <h3>Exemple PostgreSQL : Mise à jour automatique d’un timestamp</h3>
+  <pre><code>CREATE OR REPLACE FUNCTION maj_modification()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER avant_update_employe
+BEFORE UPDATE ON employés
+FOR EACH ROW
+EXECUTE FUNCTION maj_modification();
+</code></pre>
+</section>
+
+<section>
+  <h2>5. Common Table Expressions (CTE)</h2>
+  <p>Permettent de nommer une requête temporaire pour simplifier les requêtes complexes ou récursives.</p>
+
+  <h3>Exemple simple</h3>
+  <pre><code>WITH cte_salaire AS (
+  SELECT dept_id, AVG(salaire) AS salaire_moyen
+  FROM employés
+  GROUP BY dept_id
+)
+SELECT e.nom, e.salaire, cte_salaire.salaire_moyen
+FROM employés e
+JOIN cte_salaire ON e.dept_id = cte_salaire.dept_id
+WHERE e.salaire &gt; cte_salaire.salaire_moyen;
+</code></pre>
+
+  <h3>Exemple récursif (hiérarchie employés/manager)</h3>
+  <pre><code>WITH RECURSIVE hierarchy AS (
+  SELECT id, nom, manager_id, 1 AS niveau
+  FROM employés
+  WHERE manager_id IS NULL
+  UNION ALL
+  SELECT e.id, e.nom, e.manager_id, h.niveau + 1
+  FROM employés e
+  JOIN hierarchy h ON e.manager_id = h.id
+)
+SELECT * FROM hierarchy ORDER BY niveau, nom;
+</code></pre>
+</section>
+
+<section>
+  <h2>6. Gestion des Transactions</h2>
+  <p>Permettent d’assurer la cohérence des données via un groupe d’opérations qui s’exécutent entièrement ou pas du tout.</p>
+
+  <h3>Exemple basique</h3>
+  <pre><code>BEGIN TRANSACTION;
+
+UPDATE comptes SET solde = solde - 100 WHERE id = 1;
+UPDATE comptes SET solde = solde + 100 WHERE id = 2;
+
+COMMIT;</code></pre>
+
+  <h3>Rollback en cas d’erreur</h3>
+  <pre><code>BEGIN TRANSACTION;
+
+UPDATE comptes SET solde = solde - 100 WHERE id = 1;
+
+-- erreur détectée, on annule tout
+ROLLBACK;</code></pre>
+
+  <h3>Savepoints</h3>
+  <pre><code>BEGIN TRANSACTION;
+
+UPDATE comptes SET solde = solde - 100 WHERE id = 1;
+
+SAVEPOINT étape1;
+
+UPDATE comptes SET solde = solde + 100 WHERE id = 2;
+
+ROLLBACK TO étape1; -- annule seulement la 2e update, pas la 1ère
+
+COMMIT;</code></pre>
+</section>
+
+<section>
+  <h2>7. Procédures Stockées</h2>
+  <p>Code SQL enregistré dans la base, pouvant recevoir des paramètres, pour automatiser des opérations complexes.</p>
+
+  <h3>Exemple MySQL : procédure d’augmentation de salaire</h3>
+  <pre><code>DELIMITER //
+CREATE PROCEDURE augmenter_salaire(
+  IN id_emp INT,
+  IN montant DECIMAL(10,2)
+)
+BEGIN
+  UPDATE employés SET salaire = salaire + montant WHERE id = id_emp;
+END //
+DELIMITER ;</code></pre>
+
+  <h3>Appel de la procédure</h3>
+  <pre><code>CALL augmenter_salaire(3, 500.00);</code></pre>
+</section>
+
+<section>
+  <h2>8. Modélisation et Normalisation</h2>
+  <p>Pour concevoir une base efficace, il faut organiser les données en respectant les formes normales afin d’éviter redondance et anomalies.</p>
+
+  <h3>1NF (Première forme normale)</h3>
+  <p>Chaque colonne doit contenir une valeur atomique (pas de liste ou tableau).</p>
+
+  <h3>2NF</h3>
+  <p>Toutes les colonnes non-clés doivent dépendre entièrement de la clé primaire.</p>
+
+  <h3>3NF</h3>
+  <p>Pas de dépendance transitive entre colonnes non clés.</p>
+</section>
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a href="03_Transaction_sql">← Partie précédente</a></button>
+    <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-sql/quiz/quiz-sql-4.html">Question → </a></button>
+  </section>
+</body>
+</html>

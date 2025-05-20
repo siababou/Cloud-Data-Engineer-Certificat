@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Transactions SQL - Concepts et Exemples</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    background-color: #f9faff;
+    color: #202040;
+  }
+  h1, h2, h3 {
+    color: #203080;
+    margin-top: 2rem;
+  }
+  pre {
+    background-color: #e0e7ff;
+    border-left: 6px solid #203080;
+    padding: 1rem;
+    font-family: Consolas, monospace;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 6px rgba(32, 48, 128, 0.2);
+  }
+  th, td {
+    border: 1px solid #9fa8da;
+    padding: 0.5rem 1rem;
+    text-align: left;
+  }
+  th {
+    background-color: #203080;
+    color: white;
+  }
+  ul {
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
+  }
+  .note {
+    background-color: #fffbcc;
+    border-left: 5px solid #ffb300;
+    padding: 0.5rem 1rem;
+    margin-bottom: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Transactions SQL - Concepts et Exemples</h1>
+
+<h2>1. Qu'est-ce qu'une transaction ?</h2>
+<p>
+Une <strong>transaction</strong> en SQL est un ensemble d'opérations (INSERT, UPDATE, DELETE, etc.) qui sont exécutées comme une seule unité logique. Soit toutes les opérations sont validées ensemble, soit aucune ne l'est, garantissant la cohérence des données.
+</p>
+
+<h2>2. Propriétés ACID</h2>
+<table>
+  <thead>
+    <tr><th>Propriété</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Atomicité (Atomicity)</strong></td>
+      <td>La transaction est "tout ou rien" : soit toutes les opérations réussissent, soit aucune n'est appliquée.</td>
+    </tr>
+    <tr>
+      <td><strong>Consistance (Consistency)</strong></td>
+      <td>La transaction amène la base de données d’un état valide à un autre état valide.</td>
+    </tr>
+    <tr>
+      <td><strong>Isolation (Isolation)</strong></td>
+      <td>Les modifications d’une transaction ne sont pas visibles par d’autres transactions avant validation.</td>
+    </tr>
+    <tr>
+      <td><strong>Durabilité (Durability)</strong></td>
+      <td>Une fois validée, la transaction est définitivement enregistrée, même en cas de panne.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>3. Commandes principales des transactions</h2>
+<ul>
+  <li><code>BEGIN TRANSACTION</code> (ou <code>START TRANSACTION</code>) : démarre une transaction.</li>
+  <li><code>COMMIT</code> : valide définitivement les changements effectués durant la transaction.</li>
+  <li><code>ROLLBACK</code> : annule tous les changements effectués depuis le début de la transaction.</li>
+</ul>
+
+<h2>4. Exemple simple de transaction</h2>
+<pre><code>BEGIN TRANSACTION;
+
+UPDATE comptes SET solde = solde - 100 WHERE id = 1;
+UPDATE comptes SET solde = solde + 100 WHERE id = 2;
+
+COMMIT;</code></pre>
+<p>Ce code transfère 100 unités du compte 1 vers le compte 2. Si une erreur survient, on peut faire un <code>ROLLBACK</code> pour annuler les deux mises à jour.</p>
+
+<h2>5. Exemple avec gestion d'erreur</h2>
+<pre><code>BEGIN TRANSACTION;
+
+UPDATE comptes SET solde = solde - 100 WHERE id = 1;
+
+-- Supposons qu'on vérifie qu'il y a assez d'argent
+IF (SELECT solde FROM comptes WHERE id = 1) &lt; 0
+BEGIN
+  ROLLBACK;
+  PRINT 'Solde insuffisant, transaction annulée';
+  RETURN;
+END
+
+UPDATE comptes SET solde = solde + 100 WHERE id = 2;
+
+COMMIT;</code></pre>
+
+<h2>6. Niveaux d'isolation</h2>
+<table>
+  <thead>
+    <tr><th>Niveau</th><th>Description</th><th>Problèmes évités</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>READ UNCOMMITTED</td><td>Lecture des données non validées (dirty reads possibles)</td><td>Très peu</td></tr>
+    <tr><td>READ COMMITTED</td><td>Lecture uniquement des données validées</td><td>Évite dirty reads</td></tr>
+    <tr><td>REPEATABLE READ</td><td>Les lectures répétées donnent le même résultat (pas de non-repeatable reads)</td><td>Évite dirty & non-repeatable reads</td></tr>
+    <tr><td>SERIALIZABLE</td><td>Isolation la plus stricte, exécution séquentielle des transactions</td><td>Évite tous les problèmes (dirty, non-repeatable, phantom reads)</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Bonnes pratiques</h2>
+<ul>
+  <li>Gardez les transactions aussi courtes que possible pour éviter les verrous prolongés.</li>
+  <li>Validez ou annulez explicitement chaque transaction.</li>
+  <li>Gérez proprement les erreurs pour éviter les données inconsistantes.</li>
+  <li>Choisissez le niveau d'isolation adapté au contexte pour un bon compromis performance/sécurité.</li>
+</ul>
+
+<div class="note">
+  <strong>Note :</strong> Certaines bases SQL démarrent automatiquement une transaction pour chaque requête simple. Vérifiez le comportement de votre SGBD.
+</div>
+
+<h2>8. Résumé des commandes</h2>
+<table>
+  <thead>
+    <tr><th>Commande</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>BEGIN TRANSACTION</code></td><td>Démarre une transaction</td></tr>
+    <tr><td><code>COMMIT</code></td><td>Valide la transaction</td></tr>
+    <tr><td><code>ROLLBACK</code></td><td>Annule la transaction</td></tr>
+    <tr><td><code>SAVEPOINT nom</code></td><td>Crée un point de sauvegarde pour revenir dessus plus tard</td></tr>
+    <tr><td><code>ROLLBACK TO SAVEPOINT nom</code></td><td>Annule les opérations depuis le savepoint</td></tr>
+  </tbody>
+</table>
+
+<section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a href="02_fonctions_analytiques_sql">← Partie précédente</a></button>
+    <button type="submit" class="submit-btn"> <a  href="04_Jointures_et_divers_sql.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-sql/quiz/quiz-sql-3.html">Question → </a></button>
+</section>
+
+</body>
+</html>
