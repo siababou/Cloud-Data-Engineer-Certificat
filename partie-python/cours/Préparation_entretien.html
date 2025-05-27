@@ -8073,6 +8073,57 @@ Montant : 19.99
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<table>
+<thead>
+<tr>
+<th>Syntaxe</th>
+<th>Signification</th>
+<th>Exemple avec <code>\d</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>0 ou plusieurs fois</td>
+<td><code>\d*</code> → "", "12", "456"</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>1 ou plusieurs fois</td>
+<td><code>\d+</code> → "3", "456"</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>0 ou 1 fois</td>
+<td><code>\d?</code> → "", "7"</td>
+</tr>
+<tr>
+<td><code>{n}</code></td>
+<td>Exactement n fois</td>
+<td><code>\d{2}</code> → "25"</td>
+</tr>
+<tr>
+<td><code>{n,}</code></td>
+<td>n fois ou plus</td>
+<td><code>\d{2,}</code> → "250"</td>
+</tr>
+<tr>
+<td><code>{n,m}</code></td>
+<td>Entre n et m fois</td>
+<td><code>\d{2,4}</code> → "256", "9876"</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e6bc8bf2-093b-42c7-90a5-87cd2b25e034">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="7.-Top-des-erreurs-r%C3%A9currentes:">7. Top des erreurs récurrentes:<a class="anchor-link" href="#7.-Top-des-erreurs-r%C3%A9currentes:">¶</a></h2>
 </div>
 </div>
@@ -8158,12 +8209,12 @@ Montant : 19.99
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=adc3caf8-d793-45bc-a439-7092e2e87676">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=adc3caf8-d793-45bc-a439-7092e2e87676">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [79]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">est_pair_ou_impair</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -8172,8 +8223,41 @@ Montant : 19.99
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">"impair"</span>
 
-<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">"Entrez un nombre : "</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Le nombre est"</span><span class="p">,</span> <span class="n">est_pair_ou_impair</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">"Entrez un nombre : "</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Le nombre est"</span><span class="p">,</span> <span class="n">est_pair_ou_impair</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Erreur : Veuillez entrer un nombre valide."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Erreur : Veuillez entrer un nombre valide.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d878bd55-9bd8-4f49-a2db-a38d75034f42">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 </div>
 </div>
