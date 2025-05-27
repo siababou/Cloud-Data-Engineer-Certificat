@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz - Fonctions Analytiques SQL</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem auto;
+      max-width: 800px;
+      background-color: #f9f9f9;
+      color: #222;
+    }
+    h1 {
+      color: #2a5d9f;
+      text-align: center;
+    }
+    fieldset {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+    legend {
+      font-weight: bold;
+    }
+    label {
+      display: block;
+      margin: 0.3rem 0;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      background-color: #2a5d9f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Quiz - Fonctions Analytiques SQL</h1>
+
+<form id="quizForm">
+
+  <fieldset>
+    <legend>1. Que retourne <code>ROW_NUMBER() OVER (ORDER BY salary DESC)</code> ?</legend>
+    <label><input type="radio" name="q1" value="a"> Le rang, sans doublons même en cas d’égalité</label>
+    <label><input type="radio" name="q1" value="b"> Le total des salaires</label>
+    <label><input type="radio" name="q1" value="c"> Le rang, avec doublons en cas d’égalité</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>2. Que fait <code>RANK()</code> ?</legend>
+    <label><input type="radio" name="q2" value="a"> Donne le rang sans saut</label>
+    <label><input type="radio" name="q2" value="b"> Donne le rang avec égalités et des sauts</label>
+    <label><input type="radio" name="q2" value="c"> Donne l’indice de la colonne</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>3. Quelle différence entre <code>RANK()</code> et <code>DENSE_RANK()</code> ?</legend>
+    <label><input type="radio" name="q3" value="a"> RANK saute les rangs, DENSE_RANK non</label>
+    <label><input type="radio" name="q3" value="b"> DENSE_RANK saute les rangs, RANK non</label>
+    <label><input type="radio" name="q3" value="c"> Ils sont identiques</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>4. Que fait <code>NTILE(2)</code> ?</legend>
+    <label><input type="radio" name="q4" value="a"> Divise les lignes en 2 groupes égaux</label>
+    <label><input type="radio" name="q4" value="b"> Crée une nouvelle colonne de notes</label>
+    <label><input type="radio" name="q4" value="c"> Calcule la médiane</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>5. Quel est le rôle de <code>AVG() OVER (PARTITION BY department_id)</code> ?</legend>
+    <label><input type="radio" name="q5" value="a"> Calcule la moyenne globale</label>
+    <label><input type="radio" name="q5" value="b"> Calcule la moyenne par groupe (département)</label>
+    <label><input type="radio" name="q5" value="c"> Trie par département</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>6. Que retournent <code>LAG()</code> et <code>LEAD()</code> ?</legend>
+    <label><input type="radio" name="q6" value="a"> Le maximum et le minimum</label>
+    <label><input type="radio" name="q6" value="b"> La valeur précédente et suivante selon un ordre</label>
+    <label><input type="radio" name="q6" value="c"> Le rang de chaque employé</label>
+  </fieldset>
+
+  <button type="button" onclick="corrigerQuiz()">Voir les réponses</button>
+
+</form>
+
+<script>
+  const bonnesReponses = {
+    q1: 'a',
+    q2: 'b',
+    q3: 'a',
+    q4: 'a',
+    q5: 'b',
+    q6: 'b'
+  };
+
+  function corrigerQuiz() {
+    const form = document.forms['quizForm'];
+    let message = "";
+    Object.keys(bonnesReponses).forEach(q => {
+      const selected = form[q].value;
+      const fieldset = form[q][0].closest('fieldset');
+      const legend = fieldset.querySelector('legend');
+      if (selected === bonnesReponses[q]) {
+        legend.innerHTML += " <span class='correct'>(✓ Bonne réponse)</span>";
+      } else {
+        legend.innerHTML += " <span class='incorrect'>(✗ Mauvaise réponse)</span>";
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

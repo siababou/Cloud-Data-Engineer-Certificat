@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Optimisation SQL BigQuery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      border-radius: 8px;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    code, pre {
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      padding: 0.5rem;
+      display: block;
+      overflow-x: auto;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    ul {
+      margin-left: 1.5rem;
+    }
+    .example-block {
+      margin-top: 1rem;
+    }
+    .bad {
+      border-left: 4px solid #e74c3c;
+      background-color: #fff0f0;
+      padding: 0.75rem;
+    }
+    .good {
+      border-left: 4px solid #2ecc71;
+      background-color: #f0fff5;
+      padding: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Optimisation des Requêtes SQL sur BigQuery</h1>
+
+    <section>
+      <h2>📌 Introduction</h2>
+      <p>
+        BigQuery facture selon le volume de données lues. Une requête inefficace peut coûter cher et ralentir les performances.
+        Ce guide présente des bonnes pratiques et exemples pour réduire les coûts et accélérer les temps d'exécution.
+      </p>
+    </section>
+
+    <section>
+      <h2>✅ Bonnes Pratiques Générales</h2>
+      <ul>
+        <li><strong>Sélectionner les colonnes nécessaires</strong> — éviter <code>SELECT *</code>.</li>
+        <li><strong>Filtrer avec <code>WHERE</code></strong> tôt dans la requête.</li>
+        <li><strong>Utiliser le partitionnement</strong> (souvent par date).</li>
+        <li><strong>Clusturer</strong> les colonnes fréquemment utilisées dans les <code>WHERE</code> ou <code>JOIN</code>.</li>
+        <li><strong>Utiliser <code>EXPLAIN</code></strong> pour analyser le plan d’exécution.</li>
+        <li><strong>Éviter les fonctions coûteuses</strong> dans les filtres (ex: <code>DATE(TIMESTAMP(...))</code>).</li>
+        <li><strong>Préférer <code>APPROX_COUNT_DISTINCT</code></strong> à <code>COUNT(DISTINCT ...)</code>.</li>
+        <li><strong>Matérialiser les sous-requêtes</strong> avec des tables temporaires ou des vues.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🧪 Comparaison : Mauvais vs Bonnes Requêtes</h2>
+
+      <div class="example-block bad">
+        <h3>❌ Mauvais : SELECT *</h3>
+        <pre><code>SELECT * FROM my_dataset.large_table
+WHERE country = 'FR';</code></pre>
+      </div>
+
+      <div class="example-block good">
+        <h3>✅ Bon : Sélection des colonnes</h3>
+        <pre><code>SELECT user_id, created_at FROM my_dataset.large_table
+WHERE country = 'FR';</code></pre>
+      </div>
+
+      <div class="example-block bad">
+        <h3>❌ Mauvais : Pas de filtre de partition</h3>
+        <pre><code>SELECT user_id FROM events
+WHERE EXTRACT(YEAR FROM event_date) = 2024;</code></pre>
+      </div>
+
+      <div class="example-block good">
+        <h3>✅ Bon : Filtrage efficace</h3>
+        <pre><code>SELECT user_id FROM events
+WHERE event_date BETWEEN '2024-01-01' AND '2024-12-31';</code></pre>
+      </div>
+
+      <div class="example-block bad">
+        <h3>❌ Mauvais : Jointure non filtrée</h3>
+        <pre><code>SELECT * FROM table1 t1
+JOIN table2 t2 ON t1.id = t2.id;</code></pre>
+      </div>
+
+      <div class="example-block good">
+        <h3>✅ Bon : Filtrage avant la jointure</h3>
+        <pre><code>WITH filtered_t1 AS (
+  SELECT id FROM table1 WHERE date >= '2024-01-01'
+)
+SELECT f.id, t2.name
+FROM filtered_t1 f
+JOIN table2 t2 ON f.id = t2.id;</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>🚀 Exemples Avancés</h2>
+
+      <h3>📌 Table Temporaire</h3>
+      <pre><code>CREATE TEMP TABLE recent_users AS
+SELECT user_id FROM users
+WHERE signup_date >= '2024-01-01';
+
+SELECT u.user_id, COUNT(*) AS nb_actions
+FROM recent_users u
+JOIN actions a ON u.user_id = a.user_id
+GROUP BY u.user_id;</code></pre>
+
+      <h3>📌 Approximation plus rapide</h3>
+      <pre><code>SELECT APPROX_COUNT_DISTINCT(user_id) FROM events;</code></pre>
+
+      <h3>📌 Vue matérialisée</h3>
+      <pre><code>CREATE MATERIALIZED VIEW user_event_counts AS
+SELECT user_id, COUNT(*) AS event_count
+FROM events
+GROUP BY user_id;</code></pre>
+
+      <h3>📌 Requête finale optimisée</h3>
+      <pre><code>SELECT user_id, COUNT(*) AS nb_events
+FROM `my_dataset.events`
+WHERE event_date BETWEEN '2024-05-01' AND '2024-05-07'
+  AND country = 'FR'
+GROUP BY user_id;</code></pre>
+    </section>
+
+    <section>
+    <button type="submit" class="submit-btn"> <a href="/Cloud-Data-Engineer-Certificat/sommaire.html">← Retour à l'accueil</a></button>
+    <button type="submit" class="submit-btn"> <a href="04_Jointures_et_divers_sql.html">← Partie précédente</a></button>
+    <button type="submit" class="submit-btn"> <a  href="05_optimisation_bigquery.html">Partie suivante →</a></button>
+    <button type="submit" class="submit-btn"> <a  href="/Cloud-Data-Engineer-Certificat/partie-sql/quiz/quiz-sql-5.html">Question → </a></button>
+  </section>
+
+  </div>
+
+</body>
+</html>

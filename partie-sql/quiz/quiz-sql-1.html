@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz SQL - Fonctions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem auto;
+      max-width: 800px;
+      background-color: #f4f6ff;
+      color: #1a237e;
+    }
+    h1 {
+      text-align: center;
+      color: #283593;
+    }
+    form {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(40, 53, 147, 0.1);
+    }
+    fieldset {
+      margin-bottom: 2rem;
+      border: none;
+    }
+    legend {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    label {
+      display: block;
+      margin: 0.3rem 0;
+    }
+    button {
+      background-color: #283593;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3949ab;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Quiz SQL : Fonctions</h1>
+
+<form id="quiz-form">
+
+  <fieldset>
+    <legend><strong>1. Quelle fonction permet de compter le nombre de lignes ?</strong></legend>
+    <label><input type="radio" name="q1" required /> SUM()</label>
+    <label><input type="radio" name="q1" /> AVG()</label>
+    <label><input type="radio" name="q1" /> COUNT()</label>
+    <label><input type="radio" name="q1" /> MAX()</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>2. Quel mot-clé SQL permet de regrouper des résultats pour appliquer une fonction d’agrégation sur chaque groupe ?</strong></legend>
+    <label><input type="radio" name="q2" required /> ORDER BY</label>
+    <label><input type="radio" name="q2" /> GROUP BY</label>
+    <label><input type="radio" name="q2" /> WHERE</label>
+    <label><input type="radio" name="q2" /> HAVING</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>3. Que fait la fonction <code>CONCAT()</code> ?</strong></legend>
+    <label><input type="radio" name="q3" required /> Elle additionne des nombres</label>
+    <label><input type="radio" name="q3" /> Elle convertit en majuscules</label>
+    <label><input type="radio" name="q3" /> Elle concatène des chaînes de caractères</label>
+    <label><input type="radio" name="q3" /> Elle retourne la première lettre</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>4. Quelle fonction retourne la date et l’heure actuelles ?</strong></legend>
+    <label><input type="radio" name="q4" required /> DATE()</label>
+    <label><input type="radio" name="q4" /> TODAY()</label>
+    <label><input type="radio" name="q4" /> NOW()</label>
+    <label><input type="radio" name="q4" /> CURRENT()</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>5. Que fait la fonction <code>SUBSTRING('Bonjour', 1, 3)</code> ?</strong></legend>
+    <label><input type="radio" name="q5" required /> retourne "onj"</label>
+    <label><input type="radio" name="q5" /> retourne "Bon"</label>
+    <label><input type="radio" name="q5" /> retourne "B"</label>
+    <label><input type="radio" name="q5" /> retourne "jour"</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>6. Laquelle des fonctions suivantes convertit un entier en texte ?</strong></legend>
+    <label><input type="radio" name="q6" required /> CAST()</label>
+    <label><input type="radio" name="q6" /> FLOOR()</label>
+    <label><input type="radio" name="q6" /> ROUND()</label>
+    <label><input type="radio" name="q6" /> ABS()</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>7. Quelle fonction retourne la valeur absolue ?</strong></legend>
+    <label><input type="radio" name="q7" required /> ROUND()</label>
+    <label><input type="radio" name="q7" /> CEIL()</label>
+    <label><input type="radio" name="q7" /> FLOOR()</label>
+    <label><input type="radio" name="q7" /> ABS()</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>8. Quelle fonction conditionnelle renvoie une valeur alternative si la colonne contient NULL ?</strong></legend>
+    <label><input type="radio" name="q8" required /> IF()</label>
+    <label><input type="radio" name="q8" /> CASE</label>
+    <label><input type="radio" name="q8" /> ISNULL()</label>
+    <label><input type="radio" name="q8" /> COALESCE()</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>9. Quelle fonction retourne l’année d’une date ?</strong></legend>
+    <label><input type="radio" name="q9" required /> YEAR()</label>
+    <label><input type="radio" name="q9" /> DATE()</label>
+    <label><input type="radio" name="q9" /> GETYEAR()</label>
+    <label><input type="radio" name="q9" /> EXTRACT()</label>
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>10. Que fait la fonction <code>ROUND(123.4567, 2)</code> ?</strong></legend>
+    <label><input type="radio" name="q10" required /> Arrondit à 123</label>
+    <label><input type="radio" name="q10" /> Arrondit à 123.5</label>
+    <label><input type="radio" name="q10" /> Arrondit à 123.46</label>
+    <label><input type="radio" name="q10" /> Arrondit à 124</label>
+  </fieldset>
+
+  <button type="submit">Soumettre</button>
+
+</form>
+
+<script>
+  document.querySelector("form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêche l'envoi du formulaire
+
+    let score = 0;
+
+    const bonnesReponses = {
+      q1: "COUNT()",
+      q2: "GROUP BY",
+      q3: "Elle concatène des chaînes de caractères",
+      q4: "NOW()",
+      q5: "retourne \"Bon\"",
+      q6: "CAST()",
+      q7: "ABS()",
+      q8: "COALESCE()",
+      q9: "YEAR()",
+      q10: "Arrondit à 123.46"
+    };
+
+    for (let [q, bonneRep] of Object.entries(bonnesReponses)) {
+      const reponses = document.getElementsByName(q);
+      for (let r of reponses) {
+        if (r.checked && r.parentElement.textContent.trim() === bonneRep) {
+          score++;
+        }
+      }
+    }
+
+    alert("Votre score est de " + score + " / 10");
+  });
+</script>
+
+</body>
+</html>
