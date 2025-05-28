@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Exercices d'algorithme en Python</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fafafa;
+    color: #222;
+    margin: 2rem auto;
+    max-width: 900px;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+  h1 {
+    text-align: center;
+    color: #1a237e;
+    margin-bottom: 2rem;
+  }
+  section {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    color: #1565c0;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  p.context {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  pre {
+    background-color: #263238;
+    color: #eceff1;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 1rem;
+  }
+  code {
+    font-family: 'Fira Mono', Consolas, Monaco, monospace;
+  }
+</style>
+</head>
+<body>
+
+<h1>Exemples d’exercices d’algorithme en Python</h1>
+
+<section>
+  <h2>Exemple 1 : Tail</h2>
+  <p class="context">Tail est une commande UNIX qui permet d’afficher les x dernières lignes de texte d’un fichier. L’exercice consiste à reproduire cette fonctionnalité en Python.</p>
+  <pre><code>def tail(file_path, n):
+    with open(file_path, 'r') as f:
+        lines = f.readlines()
+    return lines[-n:]
+</code></pre>
+</section>
+
+<section>
+  <h2>Exemple 2 : Sérialisation</h2>
+  <p class="context">La sérialisation est le processus d’enregistrement de l’état d’un objet en une séquence d’octets. Proposez un algorithme pour sérialiser et désérialiser des grappes d’objets.</p>
+  <pre><code>import pickle
+
+def serialize_objects(objects, file_path):
+    with open(file_path, 'wb') as f:
+        pickle.dump(objects, f)
+
+def deserialize_objects(file_path):
+    with open(file_path, 'rb') as f:
+        return pickle.load(f)
+</code></pre>
+</section>
+
+<section>
+  <h2>Exemple 3 : Tableau de palindromes</h2>
+  <p class="context">Étant donné un tableau de chaînes de caractères, créer un algorithme qui retourne un tableau où chaque chaîne est palindrome. Si ce n’est pas possible, on met None.</p>
+  <pre><code>def to_palindrome_list(strings):
+    result = []
+    for s in strings:
+        if s == s[::-1]:
+            result.append(s)
+        else:
+            result.append(None)
+    return result
+</code></pre>
+</section>
+
+<section>
+  <h2>Exemple 4 : Caractères distincts</h2>
+  <p class="context">Dans une chaîne, détecter la plus longue sous-chaîne composée de caractères distincts.</p>
+  <pre><code>def plus_longue_chaine_distincte(s):
+    seen = {}
+    start = max_len = 0
+    res = ""
+    for i, c in enumerate(s):
+        if c in seen and seen[c] >= start:
+            start = seen[c] + 1
+        seen[c] = i
+        if i - start + 1 &gt; max_len:
+            max_len = i - start + 1
+            res = s[start:i+1]
+    return res
+</code></pre>
+</section>
+
+<section>
+  <h2>Exemple 5 : En commun</h2>
+  <p class="context">Concevoir un algorithme pour trouver tous les caractères communs à deux listes triées, en tenant compte des répétitions.</p>
+  <pre><code>def commun(list1, list2):
+    i = j = 0
+    res = []
+    while i &lt; len(list1) and j &lt; len(list2):
+        if list1[i] == list2[j]:
+            res.append(list1[i])
+            i += 1
+            j += 1
+        elif list1[i] &lt; list2[j]:
+            i += 1
+        else:
+            j += 1
+    return res
+</code></pre>
+</section>
+
+<section>
+  <h2>Exemple 6 : Salut Toto (Threads)</h2>
+  <p class="context">À l’aide de deux threads, écrire « Salut Toto Salut Toto Salut Toto », sachant que le premier thread écrit « Salut » et le deuxième écrit « Toto ».</p>
+  <pre><code>import threading
+
+def print_salut():
+    for _ in range(3):
+        print("Salut", end=" ")
+
+def print_toto():
+    for _ in range(3):
+        print("Toto", end=" ")
+
+t1 = threading.Thread(target=print_salut)
+t2 = threading.Thread(target=print_toto)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+</code></pre>
+</section>
+
+<section>
+  <h2>Exemple 7 : Équilibrage</h2>
+  <p class="context">Diviser un tableau de nombres en deux sous-tableaux pour minimiser la différence entre leurs sommes.</p>
+  <pre><code>def equilibrer_tableau(arr):
+    total = sum(arr)
+    arr.sort(reverse=True)
+    set1, set2 = [], []
+    sum1 = sum2 = 0
+
+    for num in arr:
+        if sum1 &lt;= sum2:
+            set1.append(num)
+            sum1 += num
+        else:
+            set2.append(num)
+            sum2 += num
+    return set1, set2
+</code></pre>
+</section>
+
+<section>
+  <h2>Exemple 8 : Matrice triée</h2>
+  <p class="context">Étant donné une matrice où chaque ligne et colonne est triée, imprimer tous les éléments dans l’ordre croissant.</p>
+  <pre><code>import heapq
+
+def imprimer_matrice_ordonnée(matrice):
+    heap = []
+    for i, row in enumerate(matrice):
+        if row:
+            heapq.heappush(heap, (row[0], i, 0))
+
+    result = []
+    while heap:
+        val, row, col = heapq.heappop(heap)
+        result.append(val)
+        if col + 1 &lt; len(matrice[row]):
+            heapq.heappush(heap, (matrice[row][col + 1], row, col + 1))
+    return result
+</code></pre>
+</section>
+
+<section>
+  <h2>Exemple 9 : Tassement</h2>
+  <p class="context">Pousser tous les « . » d’un tableau donné à la fin du tableau.</p>
+  <pre><code>def tasser_points(liste):
+    non_points = [x for x in liste if x != "."]
+    points = [x for x in liste if x == "."]
+    return non_points + points
+</code></pre>
+</section>
+
+</body>
+</html>

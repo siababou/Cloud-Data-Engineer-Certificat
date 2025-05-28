@@ -8049,7 +8049,7 @@ Bonjour Alice !
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [86]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
@@ -8066,14 +8066,14 @@ Bonjour Alice !
 <span class="nb">print</span><span class="p">(</span><span class="s2">"URLs trouvées :"</span><span class="p">,</span> <span class="n">urls</span><span class="p">)</span>
 
 <span class="c1"># récuprer les valeurs numérique</span>
-<span class="n">prix</span> <span class="o">=</span> <span class="s2">"19.99 €"</span>
-<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+(?:\.\d{1,2})?"</span><span class="p">,</span> <span class="n">prix</span><span class="p">)</span>
+<span class="n">prix_devise</span> <span class="o">=</span> <span class="s2">"19.99 €"</span>
+<span class="n">prix</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+(?:\.\d{1,2})?"</span><span class="p">,</span> <span class="n">prix</span><span class="p">)</span>
 <span class="c1"># \d+ : un ou plusieurs chiffres avant la virgule/décimale</span>
 <span class="c1"># (?:...) : groupe non capturant</span>
 <span class="c1"># \.\d{1,2} : un point suivi de 1 ou 2 chiffres</span>
 <span class="c1"># ? : rend la partie décimale optionnelle</span>
-<span class="k">if</span> <span class="n">match</span><span class="p">:</span>
-    <span class="n">montant</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="k">if</span> <span class="n">prix</span><span class="p">:</span>
+    <span class="n">montant</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">prix</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Montant :"</span><span class="p">,</span> <span class="n">montant</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -8143,11 +8143,92 @@ Montant : 19.99
 </tr>
 </tbody>
 </table>
+<table>
+<thead>
+<tr>
+<th>Fonction</th>
+<th>Que fait-elle ?</th>
+<th>Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>re.search()</code></td>
+<td>Trouve <strong>la première</strong> correspondance</td>
+<td>Objet match ou <code>None</code></td>
+</tr>
+<tr>
+<td><code>re.findall()</code></td>
+<td>Trouve <strong>toutes</strong> les correspondances</td>
+<td>Liste de chaînes</td>
+</tr>
+<tr>
+<td><code>re.match()</code></td>
+<td>Vérifie si <strong>le début</strong> du texte correspond</td>
+<td>Objet match ou <code>None</code></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e6bc8bf2-093b-42c7-90a5-87cd2b25e034">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="7.-Exemple-de-la-diff%C3%A9rence-entre-re.findall()-et-re.search()">7. Exemple de la différence entre re.findall() et re.search()<a class="anchor-link" href="#7.-Exemple-de-la-diff%C3%A9rence-entre-re.findall()-et-re.search()">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6738a3ed-4211-4a6a-9d1f-6e4c4b348012">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [88]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="n">texte</span> <span class="o">=</span> <span class="s2">"Mon mail est toto@mail.com et celui de Paul est paul@exemple.org"</span>
+<span class="n">email_findall</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}"</span><span class="p">,</span> <span class="n">texte</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">email_findall</span><span class="p">)</span>
+
+<span class="n">email_search</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}"</span><span class="p">,</span> <span class="n">texte</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">email_search</span><span class="p">)</span>
+
+<span class="n">email_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}"</span><span class="p">,</span> <span class="n">texte</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">email_match</span><span class="p">)</span>
+
+<span class="n">texte</span> <span class="o">=</span> <span class="s2">"toto@mail.com est mon adresse"</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}"</span><span class="p">,</span> <span class="n">texte</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>  <span class="c1"># ✅ toto@mail.com (car c'est au début)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>['toto@mail.com', 'paul@exemple.org']
+&lt;re.Match object; span=(13, 26), match='toto@mail.com'&gt;
+None
+toto@mail.com
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2dc9aabc-62cf-4392-af05-0c745e1a412c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8278,7 +8359,42 @@ Montant : 19.99
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d878bd55-9bd8-4f49-a2db-a38d75034f42">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d878bd55-9bd8-4f49-a2db-a38d75034f42">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [83]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="n">texte</span> <span class="o">=</span> <span class="s2">"Mon mail est toto@mail.com et celui de Paul est paul@exemple.org"</span>
+<span class="n">emails</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}"</span><span class="p">,</span> <span class="n">texte</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">emails</span><span class="p">)</span>
+
+<span class="n">email</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}"</span><span class="p">,</span> <span class="n">texte</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>['toto@mail.com', 'paul@exemple.org']
+&lt;re.Match object; span=(13, 26), match='toto@mail.com'&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0f582d1d-a3a2-4dd2-a89c-ed002c242282">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
